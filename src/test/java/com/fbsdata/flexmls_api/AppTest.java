@@ -1,4 +1,4 @@
-package com.flexmls.client;
+package com.fbsdata.flexmls_api;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

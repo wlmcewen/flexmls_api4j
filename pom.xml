@@ -9,7 +9,7 @@
 
 	<name>flexmls_api4j</name>
 	<url>http://www.flexmls.com</url>
-	<description>Java client for the flexmls api</description>
+	<description>Java REST JSON client for the flexmls api</description>
 	<developers>
 		<developer>
 			<id>wade</id>
@@ -47,7 +47,7 @@
 	</issueManagement>
 	<organization>
 		<name>FBS Data Systems</name>
-		<url>http://www.mlslistingonlinesoftware.com</url>
+		<url>http://www.flexmls.com</url>
 	</organization>
 
 	<properties>
@@ -55,6 +55,21 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>1.7.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.7.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
