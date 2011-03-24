@@ -27,7 +27,6 @@ public class ClientTest {
 		sample.put("Megatron",  "Walther P-38");
 	}
 	
-	
 	@Test
 	public void testGet() {
 		fail("Not yet implemented");
@@ -50,7 +49,7 @@ public class ClientTest {
 
 	@Test
 	public void testAuthenticate() {
-		fail("Not yet implemented");
+//		Session s = c.authenticate();
 	}
 
 	@Test

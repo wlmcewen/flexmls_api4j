@@ -2,13 +2,15 @@ package com.fbsdata.flexmls_api;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Client implements HttpActions {
 
 	Configuration config = null;
-
+	Connection connection = null;
+	
 	public Client(Configuration config) {
 		super();
 		this.config = config;
@@ -39,8 +41,24 @@ public class Client implements HttpActions {
 	}
 	
 	protected Session authenticate(){
+		StringBuffer b = new StringBuffer(config.getApiSecret());
+		b.append("ApiKey").append(config.getApiKey());
+		String signature = sign(b.toString());
+		String path = authPath(signature);
+		
+		Object response = connection.post(path,"", new HashMap<String, String>());
+		
+		Session s = null;
 		// TODO Auto-generated method stub
-		return null;
+		return s;
+	}
+	
+	private String authPath(String sig){
+		StringBuffer b = new StringBuffer();
+		b.append("/").append(config.getVersion()).append("/session?");
+		b.append("ApiKey=").append(config.getApiKey());
+		b.append("&ApiSig=").append(sig);
+		return b.toString();
 	}
 	
 	protected String sign(String s){
