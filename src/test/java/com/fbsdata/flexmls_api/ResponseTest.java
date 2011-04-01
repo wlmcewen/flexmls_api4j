@@ -23,8 +23,6 @@ public class ResponseTest {
 	
 	@Test
 	public void testGet() throws JsonParseException, JsonMappingException, IOException {
-		Response<Object> r = Response.parse(RESPONSE, Object.class);
-		System.out.println("R " + r.toString());
 		JsonNode n = null;
 	}
 

@@ -9,12 +9,24 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-public class Response <T> {
-	
+public class Response {
+	ObjectMapper mapper = new ObjectMapper();
 	int code;
 	String message;
-	List<T> results = new ArrayList<T>();
 	boolean success;
+	private JsonNode rootNode;
+	FlexmlsApiClientException exception;
+	
+	public Response(FlexmlsApiClientException exception) {
+		super();
+		this.exception = exception;
+	}
+
+	public Response(ObjectMapper mapper,JsonNode rootNode) {
+		super();
+		this.mapper = mapper;
+		this.rootNode = rootNode;
+	}
 	public int getCode() {
 		return code;
 	}
@@ -27,11 +39,17 @@ public class Response <T> {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public List<T> getResults() {
-		return results;
-	}
-	public void setResults(List<T> results) {
-		this.results = results;
+	public <T> List<T> getResults(Class<T> resultClass) throws JsonParseException, IOException {
+		JsonNode results = rootNode.get("Results");
+		List<T> r = new ArrayList<T>(); 
+		if(!results.isArray())
+			throw new JsonMappingException("This ain't no results array!");
+		for (int i = 0; i < results.size(); i++) {
+			JsonNode n = results.get(0);
+			T result = mapper.readValue(n, resultClass);
+			r.add(result);
+		}
+		return r;
 	}
 	public boolean isSuccess() {
 		return success;
@@ -40,28 +58,9 @@ public class Response <T> {
 		this.success = success;
 	}
 	
-	public static <T> Response<T> parse(String json, Class<T> resultClass) throws JsonParseException, JsonMappingException, IOException {
-		Response<T> r = new Response<T>();
-		ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
-		JsonNode rootNode = mapper.readValue(json, JsonNode.class);
-		rootNode = rootNode.get("D");
-		r.setSuccess(rootNode.get("Success").getValueAsBoolean());
-		if(!r.isSuccess()){
-			r.setCode(rootNode.get("Code").getValueAsInt());
-			r.setMessage(rootNode.get("Message").getValueAsText());
-		}
-		else {
-			JsonNode results = rootNode.get("Results");
-			if(!results.isArray())
-				throw new JsonMappingException("This ain't no results array!");
-			for (int i = 0; i < results.size(); i++) {
-				JsonNode n = results.get(0);
-				T result = mapper.readValue(n, resultClass);
-				r.results.add(result);
-			}
-		}
-		// TODO pagination
-		return r;
+	public void checkFailures() throws FlexmlsApiClientException {
+		if(exception != null)
+			throw exception;
 	}
-
+	
 }

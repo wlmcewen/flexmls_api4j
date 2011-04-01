@@ -5,7 +5,7 @@ public class Configuration {
 	private String apiSecret;
 	private String apiKey;
 	private String apiUser;
-	private String endpoint = "http://api.flexmls.com";
+	private String endpoint = "api.dev.fbsdata.com";
 	private String version = "v1";
 	private boolean ssl;
 	private String userAgent = "flexmls API Java client";

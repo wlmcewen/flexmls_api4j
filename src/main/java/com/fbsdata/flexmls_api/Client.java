@@ -9,7 +9,7 @@ import java.util.Map;
 public class Client implements HttpActions {
 
 	Configuration config = null;
-	Connection connection = null;
+	Connection<Response> connection = null;
 	
 	public Client(Configuration config) {
 		super();
@@ -17,30 +17,30 @@ public class Client implements HttpActions {
 	}
 
 	@Override
-	public Object get(String path, Map<String, String> options) {
+	public Object get(String path, Map<String, String> options) throws FlexmlsApiClientException {
+		String signedPath = signToken(path, options, "");
+		return connection.get(signedPath);
+	}
+
+	@Override
+	public Object post(String path, String body, Map<String, String> options) throws FlexmlsApiClientException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object post(String path, String body, Map<String, String> options) {
+	public Object put(String path, String body, Map<String, String> options) throws FlexmlsApiClientException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object put(String path, String body, Map<String, String> options) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object delete(String path, Map<String, String> options) {
+	public Object delete(String path, Map<String, String> options) throws FlexmlsApiClientException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
-	protected Session authenticate(){
+	protected Session authenticate() throws FlexmlsApiClientException {
 		StringBuffer b = new StringBuffer(config.getApiSecret());
 		b.append("ApiKey").append(config.getApiKey());
 		String signature = sign(b.toString());
