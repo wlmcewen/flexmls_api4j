@@ -5,11 +5,20 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
+/**
+ * Essentially read only, strictly validated JSON entity for the API session.
+ */
 public class Session {
-	
+	@JsonProperty("AuthToken")
 	String token;
+	@JsonProperty("Roles")
 	List<String> roles = new ArrayList<String>();
+	@JsonProperty("Expires")
 	Date expiration;
+	
+	public Session() { }
 	
 	public Session(String token, List<String> roles, Date expiration) {
 		super();
@@ -30,5 +39,4 @@ public class Session {
 	public boolean isExpired(){
 		return expiration.before(new Date());
 	}
-
 }

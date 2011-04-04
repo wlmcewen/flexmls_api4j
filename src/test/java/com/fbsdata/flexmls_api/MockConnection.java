@@ -1,35 +1,64 @@
 package com.fbsdata.flexmls_api;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Map;
+import static org.mockito.Mockito.*;
 
-public class MockConnection<T> extends Connection<T> {
+@SuppressWarnings("unchecked")
+public class MockConnection extends Connection<Response> {
 
-	@Override
-	public Object get(String path, Map<String, String> options)
-			throws FlexmlsApiClientException {
-		// TODO Auto-generated method stub
-		return null;
+	JsonResponseHandler parser = new JsonResponseHandler();
+	Connection<Response> c;
+	
+	public MockConnection() {
+		c = mock(Connection.class);
+	}
+	
+	public void stubGet(String path, String fixture, int status) throws FlexmlsApiClientException {
+		Response r = parseFile(fixture, status);
+		when(c.get(path)).thenReturn(r);
+	}
+	public void stubPost(String path, String body, String fixture, int status) throws FlexmlsApiClientException {
+		Response r = parseFile(fixture, status);
+		when(c.post(path, body)).thenReturn(r);
+	}
+	
+	private Response parseFile(String fixture, int status) throws FlexmlsApiClientException {
+		try {
+			File f = new File("src/test/fixtures/" + fixture);
+			return parser.parseResponse(new FileInputStream(f), status);
+		} catch (IOException e) {
+			throw new FlexmlsApiClientException("Mock test failed to find json file " + fixture);
+		}
 	}
 
 	@Override
-	public Object post(String path, String body, Map<String, String> options)
+	public Response get(String path, Map<String, String> options)
 			throws FlexmlsApiClientException {
-		// TODO Auto-generated method stub
-		return null;
+		return c.get(path);
 	}
 
 	@Override
-	public Object put(String path, String body, Map<String, String> options)
+	public Response post(String path, String body, Map<String, String> options)
 			throws FlexmlsApiClientException {
 		// TODO Auto-generated method stub
-		return null;
+		return c.post(path, body);
 	}
 
 	@Override
-	public Object delete(String path, Map<String, String> options)
+	public Response put(String path, String body, Map<String, String> options)
 			throws FlexmlsApiClientException {
 		// TODO Auto-generated method stub
-		return null;
+		return c.put(path, body);
+	}
+
+	@Override
+	public Response delete(String path, Map<String, String> options)
+			throws FlexmlsApiClientException {
+		// TODO Auto-generated method stub
+		return c.delete(path);
 	}
 
 	

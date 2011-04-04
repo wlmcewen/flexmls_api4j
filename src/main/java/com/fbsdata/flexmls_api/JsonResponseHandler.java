@@ -1,5 +1,8 @@
 package com.fbsdata.flexmls_api;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ResponseHandler;
 import org.codehaus.jackson.JsonNode;
@@ -10,14 +13,22 @@ public class JsonResponseHandler implements ResponseHandler<Response> {
 
 	@Override
 	public Response handleResponse(HttpResponse response) {
-		JsonNode root;
-		Response r = null;
+		Response r;
 		try {
-			root = mapper.readValue(response.getEntity().getContent(), JsonNode.class);
-			r = parse(root, response.getStatusLine().getStatusCode());
-		} catch (Exception e) {
+			InputStream content = response.getEntity().getContent();
+			int statusCode = response.getStatusLine().getStatusCode();
+			r = parseResponse(content, statusCode);
+		} catch (IOException e) {
 			r = new Response(new FlexmlsApiClientException("Failure parsing JSON resonse.  The server response may be invalid", e));
 		}
+		return r;
+	}
+
+	public Response parseResponse(InputStream content, int statusCode) throws IOException { 
+		JsonNode root;
+		Response r = null;
+		root = mapper.readValue(content, JsonNode.class);
+		r = parse(root, statusCode);
 		return r;
 	}
 	

@@ -14,7 +14,7 @@ public class ClientTest {
 	Configuration config = new Configuration();
 	Map<String, String> sample = new HashMap<String, String>();
 
-	@Before 
+	@Before
 	public void setup(){
 		config.setApiKey("MyKey");
 		config.setApiSecret("password");
@@ -48,8 +48,19 @@ public class ClientTest {
 	}
 
 	@Test
-	public void testAuthenticate() {
-//		Session s = c.authenticate();
+	public void testAuthenticate() throws FlexmlsApiClientException {
+		MockConnection conn = new MockConnection();
+		conn.stubPost("/v1/session?ApiKey=fvt_privfull_key&ApiSig=708dcf8ed16b997a7208dff6630709eb","", "session.json", 200);
+		
+		config.setApiKey("fvt_privfull_key");
+		config.setApiSecret("TopSecret");
+		config.setEndpoint("api.wade.dev.fbsdata.com");
+		Client c = new Client(config,conn,conn);
+		Session s = c.authenticate();
+		assertNotNull("Session", s);
+		assertEquals("c729d695fc1613af58de764fa44881cb", s.getToken());
+		assertEquals("private_full", s.getRoles().get(0));
+		// assertEquals(new Date(), s.getExpiration()); TODO Parse format string
 	}
 
 	@Test
