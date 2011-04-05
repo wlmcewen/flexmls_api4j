@@ -2,6 +2,7 @@ package com.fbsdata.flexmls_api;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ public class Client implements HttpActions<Response> {
 	Configuration config = null;
 	Connection<Response> connection = null;
 	Connection<Response> secure = null;
+	Session session = null;
 	
 	public Client(Configuration config, Connection<Response> defaultConnection, Connection<Response> secureConnection) {
 		super();
@@ -67,7 +69,8 @@ public class Client implements HttpActions<Response> {
 		if(sessions.isEmpty()){
 			throw new FlexmlsApiClientException("Service error.  No session returned for service authentication.");
 		}
-		return sessions.get(0);
+		session = sessions.get(0);
+		return session;
 	}
 	
 	private String authPath(String sig){
@@ -75,6 +78,22 @@ public class Client implements HttpActions<Response> {
 		b.append("/").append(config.getVersion()).append("/session?");
 		b.append("ApiKey=").append(config.getApiKey());
 		b.append("&ApiSig=").append(sig);
+		return b.toString();
+	}
+	
+	protected Map<String,String> sessionParams(){
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("ApiKey", config.getApiKey());
+		params.put("AuthToken", session.getToken());
+		return params;
+	}
+	
+	protected String requestPath(String path, Map<String, String> params){
+		StringBuffer b = new StringBuffer();
+		b.append("/").append(config.getVersion()).append(path).append("?");
+		for (String key : params.keySet()) {
+			b.append(key).append("=").append(params.get(key));
+		}
 		return b.toString();
 	}
 	

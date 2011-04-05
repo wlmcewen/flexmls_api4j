@@ -13,13 +13,15 @@ public class ClientTest {
 	Client c = null;
 	Configuration config = new Configuration();
 	Map<String, String> sample = new HashMap<String, String>();
+	MockConnection conn;
 
 	@Before
 	public void setup(){
 		config.setApiKey("MyKey");
 		config.setApiSecret("password");
 		config.setEndpoint("http://testapi.flexlms.com");
-		c = new Client(config);
+		conn = new MockConnection();
+		c = new Client(config, conn, conn);
 		sample = new HashMap<String, String>();
 		sample.put("Optimus",   "semi");
 		sample.put("Soundwave", "walkman");
@@ -28,28 +30,30 @@ public class ClientTest {
 	}
 	
 	@Test
-	public void testGet() {
+	public void testGet() throws FlexmlsApiClientException {
+		conn.stubPost("/v1/test?ApiKey=fvt_privfull_key&ApiSig=708dcf8ed16b997a7208dff6630709eb","", "session.json", 200);
+		
+		c.get("/test", sample);
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testPost() {
+	public void testPost() throws FlexmlsApiClientException {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testPut() {
+	public void testPut() throws FlexmlsApiClientException {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testDelete() {
+	public void testDelete() throws FlexmlsApiClientException {
 		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testAuthenticate() throws FlexmlsApiClientException {
-		MockConnection conn = new MockConnection();
 		conn.stubPost("/v1/session?ApiKey=fvt_privfull_key&ApiSig=708dcf8ed16b997a7208dff6630709eb","", "session.json", 200);
 		
 		config.setApiKey("fvt_privfull_key");
