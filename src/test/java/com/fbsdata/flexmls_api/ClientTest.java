@@ -4,10 +4,13 @@ import static org.junit.Assert.*;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.fbsdata.flexmls_api.model.TestModel;
 
 public class ClientTest {
 	Client c = null;
@@ -31,35 +34,58 @@ public class ClientTest {
 	
 	@Test
 	public void testGet() throws FlexmlsApiClientException {
-		conn.stubPost("/v1/test?ApiKey=fvt_privfull_key&ApiSig=708dcf8ed16b997a7208dff6630709eb","", "session.json", 200);
-		
-		c.get("/test", sample);
-		fail("Not yet implemented");
+		mockAuth();
+		conn.stubGet(
+			"/v1/test?ApiSig=9debfcde9289ab5fc1b1eb689b06b041&AuthToken=c729d695fc1613af58de764fa44881cb&Soundwave=walkman&Starscream=F-15 Eagle&Megatron=Walther P-38&Optimus=semi",
+			"test.json", 
+			200);
+		Response r = c.get("/test", sample);
+		assertTrue(r.isSuccess());
+		List<TestModel> models = r.getResults(TestModel.class);
+		assertEquals(3, models.size());
+		TestModel myFoo = models.get(0);
+		assertEquals("MyFoo", myFoo.getFoo());
+		assertEquals(1, myFoo.getBar());
 	}
 
 	@Test
 	public void testPost() throws FlexmlsApiClientException {
-		fail("Not yet implemented");
+		mockAuth();
+		conn.stubPost(
+			"/v1/test?ApiSig=d654d1f48499143e80b8208d45b9b25e&AuthToken=c729d695fc1613af58de764fa44881cb&Soundwave=walkman&Starscream=F-15 Eagle&Megatron=Walther P-38&Optimus=semi",
+			"foo=Test&bar=10",
+			"success.json",
+			201);
+		Response r = c.post("/test", "foo=Test&bar=10", sample);
+		assertTrue(r.isSuccess());
 	}
 
 	@Test
 	public void testPut() throws FlexmlsApiClientException {
-		fail("Not yet implemented");
+		mockAuth();
+		conn.stubPut(
+				"/v1/test/1234?ApiSig=d4c79156866d1db5b1ca52149ef1699b&AuthToken=c729d695fc1613af58de764fa44881cb&Soundwave=walkman&Starscream=F-15 Eagle&Megatron=Walther P-38&Optimus=semi",
+				"foo=Test&bar=10",
+				"success.json",
+				201);
+		Response r = c.put("/test/1234", "foo=Test&bar=10", sample);
+		assertTrue(r.isSuccess());
 	}
 
 	@Test
 	public void testDelete() throws FlexmlsApiClientException {
-		fail("Not yet implemented");
+		mockAuth();
+		conn.stubDelete(
+				"/v1/test/1234?ApiSig=0ef980e9b7523a691b6ea5bcd8208486&AuthToken=c729d695fc1613af58de764fa44881cb&Soundwave=walkman&Starscream=F-15 Eagle&Megatron=Walther P-38&Optimus=semi",
+				"success.json", 
+				200);
+		Response r = c.delete("/test/1234", sample);
+		assertTrue(r.isSuccess());
 	}
 
 	@Test
 	public void testAuthenticate() throws FlexmlsApiClientException {
-		conn.stubPost("/v1/session?ApiKey=fvt_privfull_key&ApiSig=708dcf8ed16b997a7208dff6630709eb","", "session.json", 200);
-		
-		config.setApiKey("fvt_privfull_key");
-		config.setApiSecret("TopSecret");
-		config.setEndpoint("api.wade.dev.fbsdata.com");
-		Client c = new Client(config,conn,conn);
+		mockAuth();
 		Session s = c.authenticate();
 		assertNotNull("Session", s);
 		assertEquals("c729d695fc1613af58de764fa44881cb", s.getToken());
@@ -80,6 +106,10 @@ public class ClientTest {
 	@Test
 	public void testBuildParamString() {
 		assertEquals("MegatronWalther P-38OptimussemiSoundwavewalkmanStarscreamF-15 Eagle", c.buildParamString(sample));
+	}
+	
+	private void mockAuth() throws FlexmlsApiClientException{
+		conn.stubPost("/v1/session?ApiKey=MyKey&ApiSig=9526c9b45b579ffb67facafa52351ec9","", "session.json", 200);
 	}
 	
 }

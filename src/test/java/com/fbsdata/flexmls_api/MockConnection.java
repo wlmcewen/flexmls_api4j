@@ -24,6 +24,15 @@ public class MockConnection extends Connection<Response> {
 		Response r = parseFile(fixture, status);
 		when(c.post(path, body)).thenReturn(r);
 	}
+
+	public void stubDelete(String path, String fixture, int status) throws FlexmlsApiClientException {
+		Response r = parseFile(fixture, status);
+		when(c.delete(path)).thenReturn(r);
+	}
+	public void stubPut(String path, String body, String fixture, int status) throws FlexmlsApiClientException {
+		Response r = parseFile(fixture, status);
+		when(c.put(path, body)).thenReturn(r);
+	}
 	
 	private Response parseFile(String fixture, int status) throws FlexmlsApiClientException {
 		try {

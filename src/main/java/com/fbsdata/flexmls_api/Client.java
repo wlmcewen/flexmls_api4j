@@ -28,34 +28,52 @@ public class Client implements HttpActions<Response> {
 
 	@Override
 	public Response get(String path, Map<String, String> options) throws FlexmlsApiClientException {
-		String signedPath = signToken(path, options, "");
-		log("GET", signedPath);
-		return connection.get(signedPath);
+		return new ReAuthable("GET", path, options) {
+			@Override
+			public Response run(String path, String body) throws FlexmlsApiClientException {
+				return connection.get(path);
+			}
+		}.execute();
 	}
 
 	@Override
 	public Response post(String path, String body, Map<String, String> options) throws FlexmlsApiClientException {
-		String signedPath = signToken(path, options, body);
-		log("POST", signedPath);
-		return connection.post(signedPath, body);
+		return new ReAuthable("POST", path, body, options) {
+			@Override
+			public Response run(String path, String body) throws FlexmlsApiClientException {
+				return connection.post(path,body);
+			}
+		}.execute();
 	}
 
 	@Override
 	public Response put(String path, String body, Map<String, String> options) throws FlexmlsApiClientException {
-		String signedPath = signToken(path, options, body);
-		log("PUT", signedPath);
-		return connection.put(signedPath, body);
+		return new ReAuthable("PUT", path, body, options) {
+			@Override
+			public Response run(String path, String body) throws FlexmlsApiClientException {
+				return connection.put(path,body);
+			}
+		}.execute();
 	}
 
 	@Override
 	public Response delete(String path, Map<String, String> options) throws FlexmlsApiClientException {
-		String signedPath = signToken(path, options, "");
-		log("DELETE", signedPath);
-		return connection.delete(signedPath);
+		return new ReAuthable("DELETE", path, options) {
+			@Override
+			public Response run(String path, String body) throws FlexmlsApiClientException {
+				return connection.delete(path);
+			}
+		}.execute();
 	}
 	
 	private void log(String action, String path){
 		System.out.println("Request: [" + action + "] - " + path);
+	}
+	
+	void reauth() throws FlexmlsApiClientException {
+		if(session == null || session.isExpired()){
+			authenticate();
+		}
 	}
 	
 	Session authenticate() throws FlexmlsApiClientException {
@@ -63,7 +81,7 @@ public class Client implements HttpActions<Response> {
 		b.append("ApiKey").append(config.getApiKey());
 		String signature = sign(b.toString());
 		String path = authPath(signature);
-		log("post", path);
+		log("AUTH-POST", path);
 		Response response = secure.post(path,"");
 		List<Session> sessions = response.getResults(Session.class);
 		if(sessions.isEmpty()){
@@ -83,16 +101,19 @@ public class Client implements HttpActions<Response> {
 	
 	protected Map<String,String> sessionParams(){
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("ApiKey", config.getApiKey());
+		if(config.getApiUser() != null){
+			params.put("ApiUser", config.getApiUser());
+		}
 		params.put("AuthToken", session.getToken());
 		return params;
 	}
 	
-	protected String requestPath(String path, Map<String, String> params){
+	protected String requestPath(String path, String signature, Map<String, String> params){
 		StringBuffer b = new StringBuffer();
 		b.append("/").append(config.getVersion()).append(path).append("?");
+		b.append("ApiSig").append("=").append(signature);
 		for (String key : params.keySet()) {
-			b.append(key).append("=").append(params.get(key));
+			b.append("&").append(key).append("=").append(params.get(key));
 		}
 		return b.toString();
 	}
@@ -118,5 +139,37 @@ public class Client implements HttpActions<Response> {
 			buffer.append(key).append(params.get(key));
 		}
 		return buffer.toString();
+	}
+	
+	private abstract class ReAuthable {
+		String command;
+		String path;
+		String body = "";
+		Map<String, String> options;
+		
+		public ReAuthable(String command, String path, String body,
+				Map<String, String> options) {
+			super();
+			this.command = command;
+			this.path = path;
+			this.body = body;
+			this.options = options;
+		}
+		public ReAuthable(String command, String path, Map<String, String> options) {
+			this(command, path, "", options);
+		}
+		private String setupRequest(String path, String body, Map<String, String> options){
+			String sig = signToken(path, options, body);
+			Map<String, String> params = sessionParams();
+			params.putAll(options);
+			return requestPath(path, sig, params);
+		}
+		public Response execute() throws FlexmlsApiClientException {
+			reauth();
+			String apiPath = setupRequest(path, body, options);
+			log(command, apiPath);
+			return run(apiPath, body);
+		}
+		protected abstract Response run(String path, String body) throws FlexmlsApiClientException;
 	}
 }
