@@ -10,7 +10,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.fbsdata.flexmls_api.model.TestModel;
+import com.fbsdata.flexmls_api.model.ExampleModel;
 
 public class ClientTest {
 	Client c = null;
@@ -41,9 +41,9 @@ public class ClientTest {
 			200);
 		Response r = c.get("/test", sample);
 		assertTrue(r.isSuccess());
-		List<TestModel> models = r.getResults(TestModel.class);
+		List<ExampleModel> models = r.getResults(ExampleModel.class);
 		assertEquals(3, models.size());
-		TestModel myFoo = models.get(0);
+		ExampleModel myFoo = models.get(0);
 		assertEquals("MyFoo", myFoo.getFoo());
 		assertEquals(1, myFoo.getBar());
 	}

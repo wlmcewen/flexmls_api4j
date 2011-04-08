@@ -2,7 +2,7 @@ package com.fbsdata.flexmls_api.model;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class TestModel {
+public class ExampleModel {
 
 	@JsonProperty("Foo")
 	String foo;
