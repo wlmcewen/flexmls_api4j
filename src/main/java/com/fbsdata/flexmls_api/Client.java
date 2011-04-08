@@ -8,10 +8,10 @@ import java.util.Map;
 
 public class Client implements HttpActions<Response> {
 
-	Configuration config = null;
-	Connection<Response> connection = null;
-	Connection<Response> secure = null;
-	Session session = null;
+	private Configuration config = null;
+	private Connection<Response> connection = null;
+	private Connection<Response> secure = null;
+	private Session session = null;
 	
 	public Client(Configuration config, Connection<Response> defaultConnection, Connection<Response> secureConnection) {
 		super();
@@ -142,10 +142,10 @@ public class Client implements HttpActions<Response> {
 	}
 	
 	private abstract class ReAuthable {
-		String command;
-		String path;
-		String body = "";
-		Map<String, String> options;
+		private String command;
+		private String path;
+		private String body = "";
+		private Map<String, String> options;
 		
 		public ReAuthable(String command, String path, String body,
 				Map<String, String> options) {

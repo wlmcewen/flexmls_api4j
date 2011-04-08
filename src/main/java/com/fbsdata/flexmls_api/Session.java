@@ -12,11 +12,11 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 public class Session {
 	@JsonProperty("AuthToken")
-	String token;
+	private String token;
 	@JsonProperty("Roles")
-	List<String> roles = new ArrayList<String>();
+	private List<String> roles = new ArrayList<String>();
 	@JsonProperty("Expires")
-	Date expiration;
+	private Date expiration;
 	
 	public Session() { }
 	

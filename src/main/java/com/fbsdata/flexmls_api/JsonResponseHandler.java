@@ -8,8 +8,12 @@ import org.apache.http.client.ResponseHandler;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 
+/**
+ * JSON client parser for the Http response.
+ *
+ */
 public class JsonResponseHandler implements ResponseHandler<Response> {
-	ObjectMapper mapper = new ObjectMapper();
+	private ObjectMapper mapper = new ObjectMapper();
 
 	@Override
 	public Response handleResponse(HttpResponse response) {
@@ -37,6 +41,7 @@ public class JsonResponseHandler implements ResponseHandler<Response> {
 		JsonNode rootNode = root.get("D");
 		Response r = new Response(mapper, rootNode);
 		r.setSuccess(rootNode.get("Success").getValueAsBoolean());
+		r.setStatus(status);
 		if(!r.isSuccess()){
 			r.setCode(rootNode.get("Code").getValueAsInt());
 			r.setMessage(rootNode.get("Message").getValueAsText());

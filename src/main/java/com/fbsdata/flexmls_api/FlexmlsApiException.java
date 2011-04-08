@@ -3,28 +3,24 @@ package com.fbsdata.flexmls_api;
 /**
  * Errors Specifically returned from the API
  * 
- * @author wade
- *
  */
 public class FlexmlsApiException extends FlexmlsApiClientException {
-
-	public FlexmlsApiException() {
-		// TODO Auto-generated constructor stub
+	private String message;
+	private int code;
+	private int status;
+	public FlexmlsApiException(String message, int code, int status) {
+		super();
+		this.message = message;
+		this.code = code;
+		this.status = status;
 	}
-
-	public FlexmlsApiException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
+	public String getMessage() {
+		return message;
 	}
-
-	public FlexmlsApiException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
+	public int getCode() {
+		return code;
 	}
-
-	public FlexmlsApiException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
+	public int getStatus() {
+		return status;
 	}
-
 }

@@ -19,9 +19,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 public class ConnectionApacheHttp extends Connection<Response> {
 	
-	protected HttpClient client;
-	protected Configuration config;
-	protected HttpHost host;
+	private HttpClient client;
+	private Configuration config;
+	private HttpHost host;
 	private ResponseHandler<Response> handler;
 	
 	public ConnectionApacheHttp(Configuration config) {
@@ -82,6 +82,30 @@ public class ConnectionApacheHttp extends Connection<Response> {
 		client = new DefaultHttpClient();
 		host = new HttpHost(config.getEndpoint());
 		handler = new JsonResponseHandler();
+	}
+	
+	protected HttpClient getClient() {
+		return client;
+	}
+
+	protected void setClient(HttpClient client) {
+		this.client = client;
+	}
+
+	protected Configuration getConfig() {
+		return config;
+	}
+
+	protected void setConfig(Configuration config) {
+		this.config = config;
+	}
+
+	protected HttpHost getHost() {
+		return host;
+	}
+
+	protected void setHost(HttpHost host) {
+		this.host = host;
 	}
 	
 }

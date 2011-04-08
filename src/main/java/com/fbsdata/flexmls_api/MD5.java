@@ -11,6 +11,9 @@ import java.security.NoSuchAlgorithmException;
  * 
  */
 public class MD5 {
+	
+	private MD5(){}  // Utility class
+	
 	static final String HEXES = "0123456789abcdef";
 
 	private static MessageDigest md = null;

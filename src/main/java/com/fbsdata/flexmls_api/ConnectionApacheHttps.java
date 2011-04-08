@@ -25,8 +25,8 @@ public class ConnectionApacheHttps extends ConnectionApacheHttp {
 			sslContext.init(null,new TrustManager[]{new FullTrustManager()},null);
 			SSLSocketFactory sf = new SSLSocketFactory(sslContext,SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER); 
 			Scheme https = new Scheme("https", 443, sf);
-			client.getConnectionManager().getSchemeRegistry().register(https);
-			host = new HttpHost(config.getEndpoint(), 443, "https");
+			getClient().getConnectionManager().getSchemeRegistry().register(https);
+			setHost(new HttpHost(getConfig().getEndpoint(), 443, "https"));
 		} catch (Exception e) {
 			System.out.println("Failed to setup SSL authentication for the client (https disabled):  " + e.getMessage());
 			e.printStackTrace();
