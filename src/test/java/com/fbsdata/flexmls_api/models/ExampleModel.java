@@ -1,4 +1,4 @@
-package com.fbsdata.flexmls_api.model;
+package com.fbsdata.flexmls_api.models;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 

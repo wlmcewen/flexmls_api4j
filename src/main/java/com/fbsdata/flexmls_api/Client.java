@@ -87,8 +87,9 @@ public class Client implements HttpActions<Response> {
 		if(sessions.isEmpty()){
 			throw new FlexmlsApiClientException("Service error.  No session returned for service authentication.");
 		}
-		session = sessions.get(0);
-		return session;
+		Session s = sessions.get(0);
+		setSession(s);
+		return s;
 	}
 	
 	private String authPath(String sig){
@@ -140,7 +141,14 @@ public class Client implements HttpActions<Response> {
 		}
 		return buffer.toString();
 	}
-	
+
+	protected String setupRequest(String path, String body, Map<String, String> options){
+		String sig = signToken(path, options, body);
+		Map<String, String> params = sessionParams();
+		params.putAll(options);
+		return requestPath(path, sig, params);
+	}
+
 	private abstract class ReAuthable {
 		private String command;
 		private String path;
@@ -158,12 +166,6 @@ public class Client implements HttpActions<Response> {
 		public ReAuthable(String command, String path, Map<String, String> options) {
 			this(command, path, "", options);
 		}
-		private String setupRequest(String path, String body, Map<String, String> options){
-			String sig = signToken(path, options, body);
-			Map<String, String> params = sessionParams();
-			params.putAll(options);
-			return requestPath(path, sig, params);
-		}
 		public Response execute() throws FlexmlsApiClientException {
 			reauth();
 			String apiPath = setupRequest(path, body, options);
@@ -172,4 +174,21 @@ public class Client implements HttpActions<Response> {
 		}
 		protected abstract Response run(String path, String body) throws FlexmlsApiClientException;
 	}
+
+	public void getSession(Session session) {
+		this.session = session;
+	}
+	
+	protected void setSession(Session session) {
+		this.session = session;
+	}
+	
+	public Configuration getConfig() {
+		return config;
+	}
+	
+	protected void setConfig(Configuration config) {
+		this.config = config;
+	}
+	
 }

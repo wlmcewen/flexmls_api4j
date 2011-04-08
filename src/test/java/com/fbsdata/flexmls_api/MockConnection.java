@@ -17,6 +17,7 @@ public class MockConnection extends Connection<Response> {
 	}
 	
 	public void stubGet(String path, String fixture, int status) throws FlexmlsApiClientException {
+		System.out.println("STUBBED: " + path);
 		Response r = parseFile(fixture, status);
 		when(c.get(path)).thenReturn(r);
 	}
