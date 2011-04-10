@@ -1,5 +1,6 @@
 package com.fbsdata.flexmls_api;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,9 +31,10 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
-
+@Ignore
 public class HttpClientTest {
 	
 	@Test
@@ -104,7 +106,6 @@ public class HttpClientTest {
 
 		        public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
 		            for (X509Certificate cert: chain) {
-		                System.err.println(cert);
 		            }
 		            return false;
 		        }
@@ -120,13 +121,11 @@ public class HttpClientTest {
 		    HttpHost target1 = new HttpHost(address.getHostName(), address.getPort(), "https");
 		    HttpGet httpget1 = new HttpGet("/random/100");
 		    HttpResponse response1 = httpclient.execute(target1, httpget1);
-		    System.err.println(response1.getStatusLine());
 		    HttpEntity entity1 = response1.getEntity();
 		    EntityUtils.consume(entity1);
 		    HttpHost target2 = new HttpHost("www.verisign.com", 443, "https");
 		    HttpGet httpget2 = new HttpGet("/");
 		    HttpResponse response2 = httpclient.execute(target2, httpget2);
-		    System.err.println(response2.getStatusLine());
 		    HttpEntity entity2 = response2.getEntity();
 		    EntityUtils.consume(entity2);
 		} finally {

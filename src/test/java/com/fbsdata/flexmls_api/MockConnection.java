@@ -4,10 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Map;
+
+import org.apache.log4j.Logger;
+
+import com.fbsdata.flexmls_api.models.Base;
+
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
 public class MockConnection extends Connection<Response> {
+	private static final Logger logger = Logger.getLogger(MockConnection.class);
 
 	JsonResponseHandler parser = new JsonResponseHandler();
 	Connection<Response> c;
@@ -17,7 +23,7 @@ public class MockConnection extends Connection<Response> {
 	}
 	
 	public void stubGet(String path, String fixture, int status) throws FlexmlsApiClientException {
-		System.out.println("STUBBED: " + path);
+		logger.debug("STUBBED: " + path);
 		Response r = parseFile(fixture, status);
 		when(c.get(path)).thenReturn(r);
 	}

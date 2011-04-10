@@ -6,8 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Client implements HttpActions<Response> {
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.log4j.Logger;
 
+public class Client implements HttpActions<Response> {
+	private static final Logger logger = Logger.getLogger(Client.class);
 	private Configuration config = null;
 	private Connection<Response> connection = null;
 	private Connection<Response> secure = null;
@@ -67,7 +70,9 @@ public class Client implements HttpActions<Response> {
 	}
 	
 	private void log(String action, String path){
-		System.out.println("Request: [" + action + "] - " + path);
+		if(logger.isDebugEnabled()){
+			logger.debug("Request: [" + action + "] - " + path);
+		}
 	}
 	
 	void reauth() throws FlexmlsApiClientException {
@@ -120,7 +125,7 @@ public class Client implements HttpActions<Response> {
 	}
 	
 	protected String sign(String s){
-		return MD5.checksum(s);
+		return DigestUtils.md5Hex(s);
 	}
 	
 	protected String signToken(String path, Map<String, String> options, String body){
