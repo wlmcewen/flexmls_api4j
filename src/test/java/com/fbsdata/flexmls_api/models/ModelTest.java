@@ -19,7 +19,10 @@ public class ModelTest {
 	
 	@Test
 	public void testProperties(){
-		PropertyAsserter.assertBasicGetterSetterBehavior(new ExampleModel());
+		ExampleModel m = new ExampleModel();
+		PropertyAsserter.assertBasicGetterSetterBehavior(m);
+		m.setAttribute("FOO", "BAR");
+		assertEquals("BAR", m.getAttribute("FOO"));
 	}
 	
 	@Before
