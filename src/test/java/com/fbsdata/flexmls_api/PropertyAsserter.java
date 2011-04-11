@@ -28,9 +28,8 @@ import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+
 
 /**
  * Test utility class that makes easy work of testing default behavior of getters and setters.
