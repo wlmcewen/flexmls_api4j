@@ -22,7 +22,6 @@ public abstract class BaseService<T extends ResourceEntity> {
 	public BaseService(Client c) {
 		super();
 		this.c = c;
-		model();
 	}
 
 	public Client getClient() {
@@ -71,7 +70,7 @@ public abstract class BaseService<T extends ResourceEntity> {
 				.getGenericSuperclass();
 		klass = (Class<T>) superclass.getActualTypeArguments()[0];
 		if(klass == null) {
-			throw new RuntimeException("Unable to determine the service model class, it will need to be explicitly passed.");
+			throw new IllegalArgumentException("Unable to determine the service model class, it will need to be explicitly passed.");
 		}
 		return klass;
 	}

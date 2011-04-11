@@ -5,6 +5,7 @@ package com.fbsdata.flexmls_api;
  * 
  */
 public class FlexmlsApiException extends FlexmlsApiClientException {
+	private static final long serialVersionUID = -8156427208964545915L;
 	private String message;
 	private int code;
 	private int status;

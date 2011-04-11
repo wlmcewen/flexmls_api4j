@@ -10,7 +10,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 
 public class Client implements HttpActions<Response> {
-	private static final Logger logger = Logger.getLogger(Client.class);
+	private static Logger logger = Logger.getLogger(Client.class);
 	private Configuration config = null;
 	private Connection<Response> connection = null;
 	private Connection<Response> secure = null;
