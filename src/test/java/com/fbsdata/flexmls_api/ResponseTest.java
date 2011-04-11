@@ -1,4 +1,4 @@
-package com.fbsdata.flexmls_api.models;
+package com.fbsdata.flexmls_api;
 
 import static org.junit.Assert.*;
 
@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import com.fbsdata.flexmls_api.FlexmlsApiClientException;
 import com.fbsdata.flexmls_api.FlexmlsApiException;
-import com.fbsdata.flexmls_api.PropertyAsserter;
 import com.fbsdata.flexmls_api.Response;
 
 public class ResponseTest {
