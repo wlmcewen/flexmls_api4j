@@ -19,16 +19,16 @@ public class ConnectionApacheHttps extends ConnectionApacheHttp {
 
 	public ConnectionApacheHttps(Configuration config) {
 		super(config);
-		_reset();
+		resetChild();
 	}
 
 	@Override
-	protected final void _reset() {
+	protected final void resetChild() {
 		try {
 			SSLContext sslContext = SSLContext.getInstance("TLS");
 			sslContext.init(null,new TrustManager[]{new FullTrustManager()},null);
 			SSLSocketFactory sf = new SSLSocketFactory(sslContext,SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER); 
-			Scheme https = new Scheme("https", 443, sf);
+			Scheme https = new Scheme("https", SSL_PORT, sf);
 			getClient().getConnectionManager().getSchemeRegistry().register(https);
 			setHost(new HttpHost(getConfig().getEndpoint(), SSL_PORT, "https"));
 		} catch (Exception e) {

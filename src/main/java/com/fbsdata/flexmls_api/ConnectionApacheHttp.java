@@ -29,7 +29,7 @@ public class ConnectionApacheHttp extends Connection<Response> {
 	
 	public ConnectionApacheHttp(Configuration config) {
 		this.config = config;
-		_init();
+		init();
 	}
 	
 	@Override
@@ -81,22 +81,24 @@ public class ConnectionApacheHttp extends Connection<Response> {
 		return rs;
 	}
 	
+	/**
+	 * Reset the connection configuration
+	 */
 	public final void reset() {
-		_init();
-		_reset();
+		init();
+		resetChild();
 	}
 	
-	private final void _init() {
+	private void init() {
 		client = new DefaultHttpClient();
 		host = new HttpHost(config.getEndpoint());
 		handler = new JsonResponseHandler();
-		_reset();
 	}
 	
 	/**
 	 * Allow inheriting classes to reset themselves
 	 */
-	protected void _reset() { }
+	protected void resetChild() { }
 	
 	protected HttpClient getClient() {
 		return client;
