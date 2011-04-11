@@ -7,8 +7,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.fbsdata.flexmls_api.models.Base;
-
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
@@ -76,6 +74,5 @@ public class MockConnection extends Connection<Response> {
 		// TODO Auto-generated method stub
 		return c.delete(path);
 	}
-
 	
 }
