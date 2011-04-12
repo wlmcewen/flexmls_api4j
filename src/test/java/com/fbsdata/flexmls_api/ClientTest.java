@@ -13,7 +13,7 @@ import org.junit.Test;
 import com.fbsdata.flexmls_api.models.ExampleModel;
 
 public class ClientTest {
-	Client c = null;
+	SimpleClient c = null;
 	Configuration config = new Configuration();
 	Map<String, String> sample = new HashMap<String, String>();
 	MockConnection conn;
@@ -24,7 +24,7 @@ public class ClientTest {
 		config.setApiSecret("password");
 		config.setEndpoint("http://testapi.flexlms.com");
 		conn = new MockConnection();
-		c = new Client(config, conn, conn);
+		c = new SimpleClient(config, conn, conn);
 		sample = new HashMap<String, String>();
 		sample.put("Optimus",   "semi");
 		sample.put("Soundwave", "walkman");

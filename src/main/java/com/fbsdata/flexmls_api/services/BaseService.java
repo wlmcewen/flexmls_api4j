@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fbsdata.flexmls_api.ApiParameter;
 import com.fbsdata.flexmls_api.Client;
 import com.fbsdata.flexmls_api.FlexmlsApiClientException;
 
@@ -15,7 +16,7 @@ import com.fbsdata.flexmls_api.models.ResourceEntity;
  * @param <T> Resource entity that this service end point provides.
  */
 public abstract class BaseService<T extends ResourceEntity> {
-	protected static final Map<String, String> EMPTY = new HashMap<String, String>();
+	protected static final Map<ApiParameter, String> EMPTY = new HashMap<ApiParameter, String>();
 	private Class<T> klass;
 	private Client c = null;
 
@@ -32,7 +33,7 @@ public abstract class BaseService<T extends ResourceEntity> {
 		return get(id, EMPTY);
 	}
 
-	public T get(String id, Map<String, String> options)
+	public T get(String id, Map<ApiParameter, String> options)
 			throws FlexmlsApiClientException {
 		return c.get(getPath(id), options).getResults(model()).get(0);
 	}
@@ -41,7 +42,7 @@ public abstract class BaseService<T extends ResourceEntity> {
 		return find(EMPTY);
 	}
 
-	public List<T> find(Map<String, String> options)
+	public List<T> find(Map<ApiParameter, String> options)
 			throws FlexmlsApiClientException {
 		return c.get(getPath(), options).getResults(model());
 	}

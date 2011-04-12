@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public abstract class Connection<R> implements HttpActions<R> {
+public abstract class Connection<R> implements HttpActions<R, String> {
 	// TODO Make this truly read only.
 	private static final Map<String, String> EMPT_MAP = new HashMap<String, String>(); 
 	
