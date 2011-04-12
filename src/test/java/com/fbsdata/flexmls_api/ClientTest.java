@@ -36,7 +36,14 @@ public class ClientTest {
 	public void testProperties(){
 		PropertyAsserter.assertBasicGetterSetterBehavior(c);
 	}
-	
+
+	@Test
+	public void testConstruction(){
+		// for petty coverage sake.
+		new Client(config);
+		new SimpleClient(config);
+	}
+
 	@Test
 	public void testGet() throws FlexmlsApiClientException {
 		mockAuth();
@@ -116,5 +123,24 @@ public class ClientTest {
 	private void mockAuth() throws FlexmlsApiClientException{
 		conn.stubPost("/v1/session?ApiKey=MyKey&ApiSig=9526c9b45b579ffb67facafa52351ec9","", "session.json", 200);
 	}
-	
+
+	@Test
+	public void testStringifyApiParams() throws FlexmlsApiClientException {
+		mockAuth();
+		conn.stubGet(
+			"/v1/test?ApiSig=eb0edf7830298eb00905feff2a382106&AuthToken=c729d695fc1613af58de764fa44881cb&_pagination=1",
+			"test.json", 
+			200);
+		Client c = new Client(config, conn, conn);
+		Map<ApiParameter,String> args = new HashMap<ApiParameter, String>();
+		args.put(ApiParameter._pagination, "1");
+		Response r = c.get("/test", args);
+		assertTrue(r.isSuccess());
+		List<ExampleModel> models = r.getResults(ExampleModel.class);
+		assertEquals(3, models.size());
+		ExampleModel myFoo = models.get(0);
+		assertEquals("MyFoo", myFoo.getFoo());
+		assertEquals(1, myFoo.getBar());
+	}
+
 }
