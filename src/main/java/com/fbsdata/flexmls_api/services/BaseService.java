@@ -9,13 +9,13 @@ import com.fbsdata.flexmls_api.ApiParameter;
 import com.fbsdata.flexmls_api.Client;
 import com.fbsdata.flexmls_api.FlexmlsApiClientException;
 
-import com.fbsdata.flexmls_api.models.ResourceEntity;
+import com.fbsdata.flexmls_api.models.Base;
 
 /**
  * Base service class that abstracts the HTTP rest requests using some handy methods.
  * @param <T> Resource entity that this service end point provides.
  */
-public abstract class BaseService<T extends ResourceEntity> {
+public abstract class BaseService<T extends Base> {
 	protected static final Map<ApiParameter, String> EMPTY = new HashMap<ApiParameter, String>();
 	private Class<T> klass;
 	private Client c = null;
@@ -47,7 +47,7 @@ public abstract class BaseService<T extends ResourceEntity> {
 		return c.get(getPath(), options).getResults(model());
 	}
 
-	protected abstract String getPath();
+	public abstract String getPath();
 
 	protected String getPath(String resourceId) {
 		return new StringBuffer(getPath()).append("/").append(resourceId)

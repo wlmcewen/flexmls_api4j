@@ -5,7 +5,8 @@ import java.util.Map;
 
 /**
  * Unrestricted client for doing more experimental queries.  This client is unsupported by the 
- * services, but can be used for hitting the services in a more scripted manner.
+ * service classes provided by the library, but can be used for hitting the services directly in a 
+ * more scripted manner.
  */
 public class SimpleClient extends BaseClient<String> {
 	public SimpleClient(Configuration config, Connection<Response> defaultConnection, Connection<Response> secureConnection) {

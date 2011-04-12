@@ -28,7 +28,6 @@ public class Base {
 		return attributes.get(key);
 	}
 
-	@JsonAnyGetter
 	public Map<String, Object> getAttributes(){
 		return attributes;
 	}

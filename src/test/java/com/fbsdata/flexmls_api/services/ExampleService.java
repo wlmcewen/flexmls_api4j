@@ -22,7 +22,7 @@ public class ExampleService extends BaseService<ExampleModel> {
 	}
 
 	@Override
-	protected String getPath() {
+	public String getPath() {
 		return PATH;
 	}
 

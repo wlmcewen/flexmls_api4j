@@ -11,7 +11,7 @@ import com.fbsdata.flexmls_api.models.Listing;
 public class ListingService extends BaseService<Listing> {
 
 	@Override
-	protected String getPath() {
+	public String getPath() {
 		return "/listings";
 	}
 
