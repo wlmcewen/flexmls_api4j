@@ -146,9 +146,9 @@ public abstract class BaseClient<U> implements HttpActions<Response, U>{
 	}
 
 	protected String setupRequest(String path, String body, Map<String, String> options) {
-		String sig = signToken(path, options, body);
 		Map<String, String> params = sessionParams();
 		params.putAll(options);
+		String sig = signToken(path, params, body);
 		return requestPath(path, sig, params);
 	}
 
