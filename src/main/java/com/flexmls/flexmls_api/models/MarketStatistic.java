@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,56 +41,36 @@ public class MarketStatistic extends Base {
 	
 	public static enum MarketStatFields {
 		// Volume
-		ActiveListVolume("ActiveListVolume"),
-		NewListVolume("NewListVolume"),
-		PendedListVolume("PendedListVolume"),
-		SoldListVolume("SoldListVolume"),
-		SoldSaleVolume("SoldSaleVolume"),
+		ActiveListVolume,
+		NewListVolume,
+		PendedListVolume,
+		SoldListVolume,
+		SoldSaleVolume,
 		//DOM
-		AverageDom("AverageDom"),
-		AverageCdom("AverageCdom"),
+		AverageDom,
+		AverageCdom,
 		// Ratio
-		SaleToOriginalListPriceRatio("SaleToOriginalListPriceRatio"),
-		SaleToListPriceRatio("SaleToListPriceRatio"),
+		SaleToOriginalListPriceRatio,
+		SaleToListPriceRatio,
 		// Price
-		ActiveAverageListPrice("ActiveAverageListPrice"),
-		NewAverageListPrice("NewAverageListPrice"),
-		PendedAverageListPrice("PendedAverageListPrice"),
-		SoldAverageListPrice("SoldAverageListPrice"),
-		SoldAverageSoldPrice("SoldAverageSoldPrice"),
-		ActiveMedianListPrice("ActiveMedianListPrice"),
-		NewMedianListPrice("NewMedianListPrice"),
-		PendedMedianListPrice("PendedMedianListPrice"),
-		SoldMedianListPrice("SoldMedianListPrice"),
-		SoldMedianSoldPrice("SoldMedianSoldPrice"),
+		ActiveAverageListPrice,
+		NewAverageListPrice,
+		PendedAverageListPrice,
+		SoldAverageListPrice,
+		SoldAverageSoldPrice,
+		ActiveMedianListPrice,
+		NewMedianListPrice,
+		PendedMedianListPrice,
+		SoldMedianListPrice,
+		SoldMedianSoldPrice,
 		// Inventory
-		ActiveListings("ActiveListings"),
-		NewListings("NewListings"),
-		PendedListings("PendedListings"),
-		SoldListings("SoldListings"),
+		ActiveListings,
+		NewListings,
+		PendedListings,
+		SoldListings,
 		// Absortion
-		AbsorptionRate("AbsorptionRate");
+		AbsorptionRate;
 
-		private static final Map<String, MarketStatFields> MAP = new HashMap<String, MarketStatFields>();
-
-		static {
-			for (MarketStatFields s : EnumSet.allOf(MarketStatFields.class)) {
-				MAP.put(s.getKey(), s);
-			}
-		}
-
-		private String key;
-		private MarketStatFields(String key){
-			this.key = key;
-		}
-
-		public String getKey() {
-			return key;
-		}
-
-		public static MarketStatFields get(String code){
-			return MAP.get(code);
-		}		
 	}
 
 	@JsonProperty("Dates")
@@ -108,7 +87,7 @@ public class MarketStatistic extends Base {
 	
 	@JsonAnySetter
 	public void setAttribute(String key, Object obj){
-		if (MarketStatFields.get(key) != null) {
+		if (MarketStatFields.valueOf(key) != null) {
 			@SuppressWarnings("unchecked")
 			List<Float> floats = (List<Float>)obj;
 			if(floats != null){
@@ -121,7 +100,7 @@ public class MarketStatistic extends Base {
 	}
 	
 	public void setAttribute2(String key, Object obj){
-		if (MarketStatFields.get(key) != null) {
+		if (MarketStatFields.valueOf(key) != null) {
 			List<?> list = (List<?>)obj;
 			if(list != null){
 				List<Float> floats = new ArrayList<Float>();
