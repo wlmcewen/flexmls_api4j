@@ -1,5 +1,7 @@
 package com.flexmls.flexmls_api;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,7 +13,7 @@ import org.apache.log4j.Logger;
 
 public abstract class BaseClient<U> implements HttpActions<Response, U>{
 
-	private static Logger logger = Logger.getLogger(Client.class);
+	private static Logger logger = Logger.getLogger(BaseClient.class);
 	private Configuration config = null;
 	private Connection<Response> connection = null;
 	private Connection<Response> secure = null;
@@ -127,9 +129,19 @@ public abstract class BaseClient<U> implements HttpActions<Response, U>{
 		b.append("/").append(config.getVersion()).append(path).append("?");
 		b.append("ApiSig").append("=").append(signature);
 		for (String key : params.keySet()) {
-			b.append("&").append(key).append("=").append(params.get(key));
+			b.append("&").append(key).append("=").append(encode(params.get(key)));
 		}
 		return b.toString();
+	}
+	
+	protected String encode(String s){
+		try {
+			return URLEncoder.encode(s, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// Unlikely to happen, but notify at least and resume without encoding.
+			logger.error("Unable to encode url parameters as utf-8.", e);
+		}
+		return s;
 	}
 
 	protected String sign(String s) {
@@ -150,7 +162,7 @@ public abstract class BaseClient<U> implements HttpActions<Response, U>{
 		Collections.sort(list);
 		StringBuffer buffer = new StringBuffer();
 		for (String key : list) {
-			buffer.append(key).append(params.get(key));
+			buffer.append(key).append(encode(params.get(key)));
 		}
 		return buffer.toString();
 	}

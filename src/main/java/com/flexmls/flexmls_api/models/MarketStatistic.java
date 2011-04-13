@@ -12,7 +12,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.annotate.JsonAnySetter;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.DeserializationContext;
@@ -27,7 +26,7 @@ public class MarketStatistic extends Base {
         private static final SimpleDateFormat FORMAT = new SimpleDateFormat("MM/dd/yyyy");
 		@Override
 		public Date deserialize(JsonParser jsonParser, DeserializationContext ctxt)
-				throws IOException, JsonProcessingException {
+				throws IOException {
 	        String date = jsonParser.getText();
 	        try {
 	            return FORMAT.parse(date);
@@ -41,7 +40,7 @@ public class MarketStatistic extends Base {
 
 	private Map<String, List<Float>> attributes = new HashMap<String, List<Float>>();
 	
-	enum MarketStatFields {
+	public static enum MarketStatFields {
 		// Volume
 		ActiveListVolume("ActiveListVolume"),
 		NewListVolume("NewListVolume"),
@@ -73,11 +72,11 @@ public class MarketStatistic extends Base {
 		// Absortion
 		AbsorptionRate("AbsorptionRate");
 
-		private static final Map<String, MarketStatFields> lookup = new HashMap<String, MarketStatFields>();
+		private static final Map<String, MarketStatFields> MAP = new HashMap<String, MarketStatFields>();
 
 		static {
 			for (MarketStatFields s : EnumSet.allOf(MarketStatFields.class)) {
-				lookup.put(s.getKey(), s);
+				MAP.put(s.getKey(), s);
 			}
 		}
 
@@ -91,7 +90,7 @@ public class MarketStatistic extends Base {
 		}
 
 		public static MarketStatFields get(String code){
-			return lookup.get(code);
+			return MAP.get(code);
 		}		
 	}
 

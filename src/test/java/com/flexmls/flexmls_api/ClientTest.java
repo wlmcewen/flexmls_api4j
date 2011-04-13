@@ -55,7 +55,7 @@ public class ClientTest {
 	public void testGet() throws FlexmlsApiClientException {
 		mockAuth();
 		conn.stubGet(
-			"/v1/test?ApiSig=56a7afe05805941fdf71b916c16a7e9f&AuthToken=c729d695fc1613af58de764fa44881cb&Soundwave=walkman&Starscream=F-15 Eagle&Megatron=Walther P-38&Optimus=semi",
+			"/v1/test?ApiSig=1fcc1c5f58cc504fbffd79784cb1fad8&AuthToken=c729d695fc1613af58de764fa44881cb&Soundwave=walkman&Starscream=F-15+Eagle&Megatron=Walther+P-38&Optimus=semi",
 			"test.json", 
 			200);
 		Response r = c.get("/test", sample);
@@ -71,7 +71,7 @@ public class ClientTest {
 	public void testPost() throws FlexmlsApiClientException {
 		mockAuth();
 		conn.stubPost(
-			"/v1/test?ApiSig=bc5c38d497e0b67e908861ca9137ddd9&AuthToken=c729d695fc1613af58de764fa44881cb&Soundwave=walkman&Starscream=F-15 Eagle&Megatron=Walther P-38&Optimus=semi",
+			"/v1/test?ApiSig=820f36fdd9a59154007b39f3dc3bc912&AuthToken=c729d695fc1613af58de764fa44881cb&Soundwave=walkman&Starscream=F-15+Eagle&Megatron=Walther+P-38&Optimus=semi",
 			"foo=Test&bar=10",
 			"success.json",
 			201);
@@ -83,7 +83,7 @@ public class ClientTest {
 	public void testPut() throws FlexmlsApiClientException {
 		mockAuth();
 		conn.stubPut(
-				"/v1/test/1234?ApiSig=0a9113cd1d27218efc5a3e9543b89838&AuthToken=c729d695fc1613af58de764fa44881cb&Soundwave=walkman&Starscream=F-15 Eagle&Megatron=Walther P-38&Optimus=semi",
+				"/v1/test/1234?ApiSig=2649baff1e76ae996fa1b76a6cbff86b&AuthToken=c729d695fc1613af58de764fa44881cb&Soundwave=walkman&Starscream=F-15+Eagle&Megatron=Walther+P-38&Optimus=semi",
 				"foo=Test&bar=10",
 				"success.json",
 				201);
@@ -95,7 +95,7 @@ public class ClientTest {
 	public void testDelete() throws FlexmlsApiClientException {
 		mockAuth();
 		conn.stubDelete(
-				"/v1/test/1234?ApiSig=b8cf138f336cdfa4cd21293fe5408492&AuthToken=c729d695fc1613af58de764fa44881cb&Soundwave=walkman&Starscream=F-15 Eagle&Megatron=Walther P-38&Optimus=semi",
+				"/v1/test/1234?ApiSig=bd358131c3f975ef9f137a3b17cdfa35&AuthToken=c729d695fc1613af58de764fa44881cb&Soundwave=walkman&Starscream=F-15+Eagle&Megatron=Walther+P-38&Optimus=semi",
 				"success.json", 
 				200);
 		Response r = c.delete("/test/1234", sample);
@@ -119,12 +119,12 @@ public class ClientTest {
 
 	@Test
 	public void testSignToken() {
-		assertEquals("ff700e42091375c44c0881963b64cbb0", c.signToken("/path", sample, ""));
+		assertEquals("f7c26177fbc4eaf63560eecebdbb34a4", c.signToken("/path", sample, ""));
 	}
 
 	@Test
 	public void testBuildParamString() {
-		assertEquals("MegatronWalther P-38OptimussemiSoundwavewalkmanStarscreamF-15 Eagle", c.buildParamString(sample));
+		assertEquals("MegatronWalther+P-38OptimussemiSoundwavewalkmanStarscreamF-15+Eagle", c.buildParamString(sample));
 	}
 	
 	private void mockAuth() throws FlexmlsApiClientException{

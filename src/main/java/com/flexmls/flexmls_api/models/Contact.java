@@ -5,9 +5,10 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class Contact extends ResourceEntity {
 	
 	@JsonProperty("DisplayName")
-	String displayName;
+	private String displayName;
 	@JsonProperty("PrimaryEmail")
-	String primaryEmail;
+	private String primaryEmail;
+	
 	public String getDisplayName() {
 		return displayName;
 	}

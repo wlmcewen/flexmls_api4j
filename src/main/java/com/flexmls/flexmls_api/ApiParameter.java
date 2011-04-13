@@ -30,11 +30,11 @@ public enum ApiParameter {
 	AuthToken("AuthToken"),
 	ApiUser("ApiUser");
 
-	private static final Map<String, ApiParameter> lookup = new HashMap<String, ApiParameter>();
+	private static final Map<String, ApiParameter> MAP = new HashMap<String, ApiParameter>();
 
 	static {
 		for (ApiParameter s : EnumSet.allOf(ApiParameter.class)) {
-			lookup.put(s.getCode(), s);
+			MAP.put(s.getCode(), s);
 		}
 	}
 
@@ -49,9 +49,9 @@ public enum ApiParameter {
 	}
 
 	public static ApiParameter get(String code) throws FlexmlsApiClientException {
-		if(lookup.containsKey(code)){
+		if(MAP.containsKey(code)){
 			throw new FlexmlsApiClientException("Unsupported API Parameter");
 		}
-		return lookup.get(code);
+		return MAP.get(code);
 	}
 }

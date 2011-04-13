@@ -26,11 +26,11 @@ public enum ApiCode {
 	// For missing codes that the library doesn't know about yet.
 	UNKNOWN_API_CODE(0);
 
-	private static final Map<Integer, ApiCode> lookup = new HashMap<Integer, ApiCode>();
+	private static final Map<Integer, ApiCode> MAP = new HashMap<Integer, ApiCode>();
 
 	static {
 		for (ApiCode s : EnumSet.allOf(ApiCode.class)) {
-			lookup.put(s.getCode(), s);
+			MAP.put(s.getCode(), s);
 		}
 	}
 
@@ -45,7 +45,6 @@ public enum ApiCode {
 	}
 
 	public static ApiCode get(int code) {
-		ApiCode apiCode = lookup.containsKey(code) ? lookup.get(code) : UNKNOWN_API_CODE;
-		return apiCode;
+		return MAP.containsKey(code) ? MAP.get(code) : UNKNOWN_API_CODE;
 	}
 }
