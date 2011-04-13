@@ -12,7 +12,9 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.log4j.Logger;
 
-
+/**
+ * SSL Connection wrapper for the Apache HTTPClient library.
+ */
 public class ConnectionApacheHttps extends ConnectionApacheHttp {
 	private static final int SSL_PORT = 443;
 	private static Logger logger = Logger.getLogger(ConnectionApacheHttps.class);

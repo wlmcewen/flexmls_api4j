@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * All the documented API response codes.
+ * All the documented API response codes.  
+ * 
+ * @see http://www.flexmls.com/developers/idx-api/supporting-documentation/error-codes/
  */
 public enum ApiCode {
 	NOT_FOUND(404), 
@@ -40,10 +42,19 @@ public enum ApiCode {
 		this.code = code;
 	}
 
+	/**
+	 * ApiCode int value
+	 * @return the int value
+	 */
 	public int getCode() {
 		return code;
 	}
 
+	/**
+	 * Reverse lookup for ApiCode
+	 * @param code int code value
+	 * @return the Matching enum, or UNKNOWN_API_CODE
+	 */
 	public static ApiCode get(int code) {
 		return MAP.containsKey(code) ? MAP.get(code) : UNKNOWN_API_CODE;
 	}

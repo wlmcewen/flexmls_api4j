@@ -2,6 +2,9 @@ package com.flexmls.flexmls_api.models;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+/**
+ * Base class for JSON results that are considered resources.  E.g. contacts, listings, and documents.
+ */
 public class ResourceEntity extends Base {
 
 	@JsonProperty("Id")

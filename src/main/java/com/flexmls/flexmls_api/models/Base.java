@@ -9,7 +9,6 @@ import org.codehaus.jackson.annotate.JsonAnySetter;
 
 /**
  * Top level model for managing JSON entities in the library.
- * 
  */
 public class Base {
 	private static Logger logger = Logger.getLogger(Base.class);

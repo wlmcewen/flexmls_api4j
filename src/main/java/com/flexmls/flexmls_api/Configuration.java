@@ -8,11 +8,18 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Client configuration settings.  Values are pulled from an optional flexmls_api.properties file 
+ * or the system environment when creating from the {@link Configuration#load()} factory.
+ */
 public class Configuration {
 	// default configuration file
 	private static final String PROPERTIES = "flexmls_api.properties";
 
-	public enum ENV {
+	/**
+	 * Supported environment and property keys
+	 */
+	public static enum KEYS {
 		API_KEY,
 		API_SECRET,
 		API_USER,
@@ -72,13 +79,26 @@ public class Configuration {
 		this.userAgent = userAgent;
 	}
 	private static Logger logger = Logger.getLogger(Configuration.class);
+	
+	/**
+	 * Load configuration from the system environment.
+	 * @return Client configuration settings
+	 */
 	public static void loadFromEnvironment(Configuration c){
 		setup(System.getenv(), c);
 	}
 	
+	/**
+	 * Load configuration from the flexmls_api.properties file.
+	 * @return Client configuration settings
+	 */
 	public static void loadFromProperties(Configuration c){
 		loadFromProperties(c, new File(PROPERTIES));
 	}
+	/**
+	 * Load configuration from a properties file.
+	 * @return Client configuration settings
+	 */
 	public static void loadFromProperties(Configuration c, File f){
 		Properties properties = new Properties();
 		try {
@@ -93,32 +113,40 @@ public class Configuration {
 		}
 	}
 	
+	/**
+	 * Load configuration from properties.
+	 * @return Client configuration settings
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void loadFromProperties(Configuration c, Properties properties){
 		setup((Map)properties, c);
 	}
 	
 	private static void setup(Map<String,String> map, Configuration c){
-		if(map.containsKey(ENV.API_KEY.toString())){
-			c.setApiKey(map.get(ENV.API_KEY.toString()));
+		if(map.containsKey(KEYS.API_KEY.toString())){
+			c.setApiKey(map.get(KEYS.API_KEY.toString()));
 		}
-		if(map.containsKey(ENV.API_USER.toString())){
-			c.setApiUser(map.get(ENV.API_USER.toString()));
+		if(map.containsKey(KEYS.API_USER.toString())){
+			c.setApiUser(map.get(KEYS.API_USER.toString()));
 		}
-		if(map.containsKey(ENV.API_SECRET.toString())){
-			c.setApiSecret(map.get(ENV.API_SECRET.toString()));
+		if(map.containsKey(KEYS.API_SECRET.toString())){
+			c.setApiSecret(map.get(KEYS.API_SECRET.toString()));
 		}
-		if(map.containsKey(ENV.ENDPOINT.toString())){
-			c.setEndpoint(map.get(ENV.ENDPOINT.toString()));
+		if(map.containsKey(KEYS.ENDPOINT.toString())){
+			c.setEndpoint(map.get(KEYS.ENDPOINT.toString()));
 		}
-		if(map.containsKey(ENV.SSL.toString())){
-			c.setSsl("true".equalsIgnoreCase(map.get(ENV.SSL.toString())));
+		if(map.containsKey(KEYS.SSL.toString())){
+			c.setSsl("true".equalsIgnoreCase(map.get(KEYS.SSL.toString())));
 		}
-		if(map.containsKey(ENV.VERSION.toString())){
-			c.setVersion(map.get(ENV.VERSION.toString()));
+		if(map.containsKey(KEYS.VERSION.toString())){
+			c.setVersion(map.get(KEYS.VERSION.toString()));
 		}
 	}
 	
+	/**
+	 * Load configuration from the flexmls_api.properties file, and the system environment.
+	 * @return Client configuration settings
+	 */
 	public static Configuration load(){
 		Configuration c = new Configuration();
 		loadFromProperties(c);

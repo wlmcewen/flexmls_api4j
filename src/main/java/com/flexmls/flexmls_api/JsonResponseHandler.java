@@ -10,7 +10,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  * JSON client parser for the HTTP response.
- *
  */
 public class JsonResponseHandler implements ResponseHandler<Response> {
 	// TODO When jackson 1.8 is released, investigate using the 
@@ -29,6 +28,13 @@ public class JsonResponseHandler implements ResponseHandler<Response> {
 		return r;
 	}
 
+	/**
+	 * Parse the response JSON into the standard API response object.
+	 * @param content response content
+	 * @param statusCode response HTTP status
+	 * @return A response object
+	 * @throws IOException
+	 */
 	public Response parseResponse(InputStream content, int statusCode) throws IOException { 
 		JsonNode root;
 		Response r = null;

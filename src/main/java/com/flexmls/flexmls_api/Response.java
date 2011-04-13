@@ -12,7 +12,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 /**
  * Standard API response object.  All requests should return JSON responses that are supported by 
  * this format.
- *
  */
 public class Response {
 	private ObjectMapper mapper = new ObjectMapper();
@@ -48,10 +47,11 @@ public class Response {
 	
 	/**
 	 * Results list.  Returns instances of the service's model type
-	 * @param <T>
-	 * @param resultClass
-	 * @return
-	 * @throws FlexmlsApiClientException
+	 * @param <T> Model type to create
+	 * @param resultClass class object for the model to create
+	 * @return One or more instances of the model based on the JSON response results
+	 * @throws FlexmlsApiClientException if unable to parse the response JSON, or unable to map it 
+	 * to the input Model class. 
 	 */
 	public <T> List<T> getResults(Class<T> resultClass) throws FlexmlsApiClientException {
 		try {
@@ -86,13 +86,10 @@ public class Response {
 			throw new FlexmlsApiException(getMessage(), getCode(), getStatus());
 		}
 	}
-
 	public int getStatus() {
 		return status;
 	}
-
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
 }

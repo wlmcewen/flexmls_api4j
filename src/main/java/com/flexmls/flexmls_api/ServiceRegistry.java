@@ -4,6 +4,9 @@ import com.flexmls.flexmls_api.services.ListingService;
 import com.flexmls.flexmls_api.services.MarketStatisticsService;
 import com.flexmls.flexmls_api.services.PropertyTypeService;
 
+/**
+ * Single point of access for working with all API services.
+ */
 public class ServiceRegistry {
 	
 	private Client client;

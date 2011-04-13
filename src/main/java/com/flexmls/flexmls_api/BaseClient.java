@@ -11,6 +11,13 @@ import java.util.Map;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 
+/**
+ * Client class for communicating with the flexmls restful interface.  Abstracts the HTTP,
+ * authentication, and request signing layers to ease communication with the service.
+ *
+ * @param <U> The parameter type accepted by the client implementation.  The value can be anything 
+ * so long as the <pre>stringifyParameterKeys()</pre> method converts it to a String for consumption.
+ */
 public abstract class BaseClient<U> implements HttpActions<Response, U>{
 
 	private static Logger logger = Logger.getLogger(BaseClient.class);
@@ -19,6 +26,12 @@ public abstract class BaseClient<U> implements HttpActions<Response, U>{
 	private Connection<Response> secure = null;
 	private Session session = null;
 
+	/**
+	 * Configure the client with general settings, and connection implementations
+	 * @param config
+	 * @param defaultConnection HTTP connection
+	 * @param secureConnection SSL based HTTP connection (for authentication at least)
+	 */
 	public BaseClient(Configuration config, Connection<Response> defaultConnection, Connection<Response> secureConnection) {
 		super();
 		this.config = config;
@@ -26,6 +39,10 @@ public abstract class BaseClient<U> implements HttpActions<Response, U>{
 		this.connection = defaultConnection;
 	}
 	
+	/**
+	 * Configure the client with general settings, and default connection settings
+	 * @param config
+	 */
 	public BaseClient(Configuration config) {
 		super();
 		this.config = config;
@@ -215,6 +232,5 @@ public abstract class BaseClient<U> implements HttpActions<Response, U>{
 		}
 		protected abstract Response run(String path, String body) throws FlexmlsApiClientException;
 	}
-	
 
 }
