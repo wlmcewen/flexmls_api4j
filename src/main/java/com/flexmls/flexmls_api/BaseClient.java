@@ -208,6 +208,7 @@ public abstract class BaseClient<U> implements HttpActions<Response, U>{
 	}
 
 	abstract class ReAuthable {
+		private static final int MAX_RETRIES = 1;
 		private String command;
 		private String path;
 		private String body = "";
@@ -228,7 +229,21 @@ public abstract class BaseClient<U> implements HttpActions<Response, U>{
 			reauth();
 			String apiPath = setupRequest(path, body, options);
 			log(command, apiPath);
-			return run(apiPath, body);
+			int retries = 0;
+			while(retries <= MAX_RETRIES){
+				try {
+					return run(apiPath, body);
+				} catch (FlexmlsApiException e) {
+					if(retries <= MAX_RETRIES && ApiCode.SESSION_EXPIRED.equals(e.getCode())){
+						authenticate();
+					}
+					else {
+						throw e;
+					}
+				}
+				retries++;
+			}
+			throw new FlexmlsApiClientException("Session expired and maximum number of authentication attempts reached.");
 		}
 		protected abstract Response run(String path, String body) throws FlexmlsApiClientException;
 	}

@@ -83,7 +83,7 @@ public class Response {
 			throw exception;
 		}
 		if(!isSuccess()){
-			throw new FlexmlsApiException(getMessage(), getCode(), getStatus());
+			throw new FlexmlsApiException(getMessage(), ApiCode.get(getCode()), getStatus());
 		}
 	}
 	public int getStatus() {

@@ -35,7 +35,7 @@ public class ResponseTest {
 			y.checkFailures();
 			fail("Failures were expected");
 		} catch (FlexmlsApiException e) {
-			assertEquals(1000, e.getCode());
+			assertEquals(ApiCode.INVALID_KEY, e.getCode());
 			assertEquals(500, e.getStatus());
 			assertEquals("API ERROR", e.getMessage());
 		}
