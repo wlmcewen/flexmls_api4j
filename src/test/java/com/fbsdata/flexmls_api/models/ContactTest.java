@@ -10,6 +10,7 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.fbsdata.flexmls_api.ApiParameter;
 import com.fbsdata.flexmls_api.Configuration;
 import com.fbsdata.flexmls_api.FlexmlsApiClientException;
 import com.fbsdata.flexmls_api.MockClient;
@@ -28,7 +29,7 @@ public class ContactTest {
 	@Test
 	public void testGet() throws FlexmlsApiClientException {
 		c.stubGet("/contacts", "contacts.json", 200);
-		Response r = c.get("/contacts", new HashMap<String, String>());
+		Response r = c.get("/contacts", new HashMap<ApiParameter, String>());
 		assertNotNull(r);
 		Contact m = r.getResults(Contact.class).get(0);
 		validate(m);
