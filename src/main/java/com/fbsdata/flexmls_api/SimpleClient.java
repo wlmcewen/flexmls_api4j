@@ -10,18 +10,11 @@ import java.util.Map;
  */
 public class SimpleClient extends BaseClient<String> {
 	public SimpleClient(Configuration config, Connection<Response> defaultConnection, Connection<Response> secureConnection) {
-		super();
-		this.config = config;
-		secure = secureConnection;
-		connection = defaultConnection;
+		super(config, defaultConnection, secureConnection);
 	}
 	public SimpleClient(Configuration config) {
-		super();
-		this.config = config;
-		secure = new ConnectionApacheHttps(config);
-		connection = config.isSsl() ? secure : new ConnectionApacheHttp(config);
-	}
-	
+		super(config);
+	}	
 	@Override
 	Map<String, String> stringifyParameterKeys(Map<String, String> parms) {
 		return new HashMap<String, String>(parms);

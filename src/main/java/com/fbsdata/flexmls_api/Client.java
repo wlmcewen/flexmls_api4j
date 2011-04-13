@@ -5,16 +5,10 @@ import java.util.Map;
 
 public class Client extends BaseClient<ApiParameter> {
 	public Client(Configuration config, Connection<Response> defaultConnection, Connection<Response> secureConnection) {
-		super();
-		this.config = config;
-		secure = secureConnection;
-		connection = defaultConnection;
+		super(config, defaultConnection, secureConnection);
 	}
 	public Client(Configuration config) {
-		super();
-		this.config = config;
-		secure = new ConnectionApacheHttps(config);
-		connection = config.isSsl() ? secure : new ConnectionApacheHttp(config);
+		super(config);
 	}
 	
 	@Override

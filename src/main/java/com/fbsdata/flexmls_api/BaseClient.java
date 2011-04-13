@@ -12,13 +12,23 @@ import org.apache.log4j.Logger;
 public abstract class BaseClient<U> implements HttpActions<Response, U>{
 
 	private static Logger logger = Logger.getLogger(Client.class);
-	protected Configuration config = null;
-	protected Connection<Response> connection = null;
-	protected Connection<Response> secure = null;
+	private Configuration config = null;
+	private Connection<Response> connection = null;
+	private Connection<Response> secure = null;
 	private Session session = null;
 
-	public BaseClient() {
+	public BaseClient(Configuration config, Connection<Response> defaultConnection, Connection<Response> secureConnection) {
 		super();
+		this.config = config;
+		this.secure = secureConnection;
+		this.connection = defaultConnection;
+	}
+	
+	public BaseClient(Configuration config) {
+		super();
+		this.config = config;
+		this.secure = new ConnectionApacheHttps(config);
+		this.connection = config.isSsl() ? secure : new ConnectionApacheHttp(config);
 	}
 
 	@Override
