@@ -12,7 +12,7 @@ import org.codehaus.jackson.annotate.JsonAnySetter;
  * 
  */
 public class Base {
-	private static final Logger logger = Logger.getLogger(Base.class);
+	private static Logger logger = Logger.getLogger(Base.class);
 	private Map<String, Object> attributes = new HashMap<String, Object>();
 	
 	@JsonAnySetter

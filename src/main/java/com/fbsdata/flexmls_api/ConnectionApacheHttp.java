@@ -17,6 +17,9 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 
+/**
+ * Connection wrapper for the Apache HTTPClient library.
+ */
 public class ConnectionApacheHttp extends Connection<Response> {
 	
 	private HttpClient client;
@@ -26,7 +29,7 @@ public class ConnectionApacheHttp extends Connection<Response> {
 	
 	public ConnectionApacheHttp(Configuration config) {
 		this.config = config;
-		reset();
+		init();
 	}
 	
 	@Override
@@ -78,11 +81,24 @@ public class ConnectionApacheHttp extends Connection<Response> {
 		return rs;
 	}
 	
-	public void reset() {
+	/**
+	 * Reset the connection configuration
+	 */
+	public final void reset() {
+		init();
+		resetChild();
+	}
+	
+	private void init() {
 		client = new DefaultHttpClient();
 		host = new HttpHost(config.getEndpoint());
 		handler = new JsonResponseHandler();
 	}
+	
+	/**
+	 * Allow inheriting classes to reset themselves
+	 */
+	protected void resetChild() { }
 	
 	protected HttpClient getClient() {
 		return client;

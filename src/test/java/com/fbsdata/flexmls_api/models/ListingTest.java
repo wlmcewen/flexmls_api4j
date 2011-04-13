@@ -12,8 +12,10 @@ import org.junit.Test;
 import com.fbsdata.flexmls_api.Configuration;
 import com.fbsdata.flexmls_api.FlexmlsApiClientException;
 import com.fbsdata.flexmls_api.MockClient;
+import com.fbsdata.flexmls_api.PropertyAsserter;
 import com.fbsdata.flexmls_api.Response;
 import com.fbsdata.flexmls_api.services.ListingService;
+
 
 public class ListingTest {
 
@@ -24,6 +26,12 @@ public class ListingTest {
 		Configuration cf = new Configuration();
 		cf.setApiUser("SOME_GUY");
 		c = MockClient.mock(cf);
+	}
+	
+	@Test
+	public void testProperties(){
+		PropertyAsserter.assertBasicGetterSetterBehavior(new Listing());
+		PropertyAsserter.assertBasicGetterSetterBehavior(new Listing.StandardFields());
 	}
 	
 	@Test

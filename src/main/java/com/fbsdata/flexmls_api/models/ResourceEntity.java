@@ -5,9 +5,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class ResourceEntity extends Base {
 
 	@JsonProperty("Id")
-	String id;
+	private String id;
 	@JsonProperty("ResourceUri")
-	String resourceUri;
+	private String resourceUri;
 
 	public ResourceEntity() {
 		super();

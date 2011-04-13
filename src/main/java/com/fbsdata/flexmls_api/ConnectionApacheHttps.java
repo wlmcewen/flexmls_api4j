@@ -14,22 +14,23 @@ import org.apache.log4j.Logger;
 
 
 public class ConnectionApacheHttps extends ConnectionApacheHttp {
-	private static final Logger logger = Logger.getLogger(ConnectionApacheHttps.class);
+	private static final int SSL_PORT = 443;
+	private static Logger logger = Logger.getLogger(ConnectionApacheHttps.class);
 
 	public ConnectionApacheHttps(Configuration config) {
 		super(config);
+		resetChild();
 	}
 
 	@Override
-	public void reset() {
-		super.reset();
+	protected final void resetChild() {
 		try {
 			SSLContext sslContext = SSLContext.getInstance("TLS");
 			sslContext.init(null,new TrustManager[]{new FullTrustManager()},null);
 			SSLSocketFactory sf = new SSLSocketFactory(sslContext,SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER); 
-			Scheme https = new Scheme("https", 443, sf);
+			Scheme https = new Scheme("https", SSL_PORT, sf);
 			getClient().getConnectionManager().getSchemeRegistry().register(https);
-			setHost(new HttpHost(getConfig().getEndpoint(), 443, "https"));
+			setHost(new HttpHost(getConfig().getEndpoint(), SSL_PORT, "https"));
 		} catch (Exception e) {
 			logger.error("Failed to setup SSL authentication for the client (https disabled).", e);
 		}

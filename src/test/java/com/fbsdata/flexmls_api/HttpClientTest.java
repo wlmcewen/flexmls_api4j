@@ -1,36 +1,25 @@
 package com.fbsdata.flexmls_api;
 
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.InetSocketAddress;
-import java.net.URL;
-import java.security.KeyStore;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
 
-import static junit.framework.Assert.*;
-
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -67,71 +56,6 @@ public class HttpClientTest {
 		assertEquals(404, rs.getStatusLine().getStatusCode());
 		String s = readString(rs.getEntity().getContent());
 		assertEquals(s, "{\"D\":{\"Success\":false,\"Code\":404,\"Message\":\"Not Found\"}}");
-	}
-	
-	/**
-	 * Example ssl test that might be useful for debugging.
-	 * @throws Exception
-	 */
-	@SuppressWarnings("null")
-	public void testExampleSSL() throws Exception {
-		
-		ClassLoader cl = HttpClientTest.class.getClassLoader();
-		URL url = cl.getResource("test.keystore");
-		KeyStore keystore  = KeyStore.getInstance("jks");
-		char[] pwd = "nopassword".toCharArray();
-		keystore.load(url.openStream(), pwd);
-
-		TrustManagerFactory tmf = TrustManagerFactory.getInstance(
-		        TrustManagerFactory.getDefaultAlgorithm());
-		tmf.init(keystore);
-		TrustManager[] tm = tmf.getTrustManagers();
-
-		KeyManagerFactory kmfactory = KeyManagerFactory.getInstance(
-		        KeyManagerFactory.getDefaultAlgorithm());
-		kmfactory.init(keystore, pwd);
-		KeyManager[] km = kmfactory.getKeyManagers();
-
-		SSLContext sslcontext = SSLContext.getInstance("TLS");
-		sslcontext.init(km, tm, null);
-
-//		LocalTestServer localServer = new LocalTestServer(sslcontext);
-//		localServer.registerDefaultHandlers();
-//
-//		localServer.start();
-		try {
-
-		    DefaultHttpClient httpclient = new DefaultHttpClient();
-		    TrustStrategy trustStrategy = new TrustStrategy() {
-
-		        public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-		            for (X509Certificate cert: chain) {
-		            }
-		            return false;
-		        }
-
-		    };
-
-		    SSLSocketFactory sslsf = new SSLSocketFactory("TLS", null, null, keystore, null,
-		            trustStrategy, new AllowAllHostnameVerifier());
-		    Scheme https = new Scheme("https", 443, sslsf);
-		    httpclient.getConnectionManager().getSchemeRegistry().register(https);
-
-		    InetSocketAddress address = null; //localServer.getServiceAddress();
-		    HttpHost target1 = new HttpHost(address.getHostName(), address.getPort(), "https");
-		    HttpGet httpget1 = new HttpGet("/random/100");
-		    HttpResponse response1 = httpclient.execute(target1, httpget1);
-		    HttpEntity entity1 = response1.getEntity();
-		    EntityUtils.consume(entity1);
-		    HttpHost target2 = new HttpHost("www.verisign.com", 443, "https");
-		    HttpGet httpget2 = new HttpGet("/");
-		    HttpResponse response2 = httpclient.execute(target2, httpget2);
-		    HttpEntity entity2 = response2.getEntity();
-		    EntityUtils.consume(entity2);
-		} finally {
-//		    localServer.stop();
-		}		
-		
 	}
 	
 	private String readString(InputStream is) throws IOException{

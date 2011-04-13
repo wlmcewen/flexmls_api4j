@@ -58,7 +58,7 @@ public class Response {
 			JsonNode results = rootNode.get("Results");
 			List<T> r = new ArrayList<T>(); 
 			if(!results.isArray()){
-				throw new JsonMappingException("This ain't no results array!");
+				throw new JsonMappingException("The JSON returned is missing a results array, which is expected on all api responses.");
 			}
 			for (int i = 0; i < results.size(); i++) {
 				JsonNode n = results.get(0);

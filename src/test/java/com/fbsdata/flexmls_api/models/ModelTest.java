@@ -10,11 +10,20 @@ import org.junit.Test;
 import com.fbsdata.flexmls_api.Configuration;
 import com.fbsdata.flexmls_api.FlexmlsApiClientException;
 import com.fbsdata.flexmls_api.MockClient;
+import com.fbsdata.flexmls_api.PropertyAsserter;
 import com.fbsdata.flexmls_api.Response;
 import com.fbsdata.flexmls_api.services.ExampleService;
 
 public class ModelTest {
 	MockClient c;
+	
+	@Test
+	public void testProperties(){
+		ExampleModel m = new ExampleModel();
+		PropertyAsserter.assertBasicGetterSetterBehavior(m);
+		m.setAttribute("FOO", "BAR");
+		assertEquals("BAR", m.getAttribute("FOO"));
+	}
 	
 	@Before
 	public void setup() throws FlexmlsApiClientException{

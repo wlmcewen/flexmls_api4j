@@ -7,7 +7,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class Listing extends ResourceEntity {
 	
 	@JsonProperty("StandardFields")
-	StandardFields standardFields;
+	private StandardFields standardFields;
 	
 	public StandardFields getStandardFields() {
 		return standardFields;
@@ -19,55 +19,55 @@ public class Listing extends ResourceEntity {
 
 	public static class StandardFields extends Base {
 	    @JsonProperty("StreetNumber")
-	    String streetNumber;
+	    private String streetNumber;
 	    @JsonProperty("Longitude")
-	    String longitude;
+	    private String longitude;
 	    @JsonProperty("City")
-	    String city;
+	    private String city;
 	    @JsonProperty("ListingId")
-	    String listingId;
+	    private String listingId;
 	    @JsonProperty("PublicRemarks")
-	    String publicRemarks;
+	    private String publicRemarks;
 	    @JsonProperty("BuildingAreaTotal")
-	    String buildingAreaTotal;
+	    private String buildingAreaTotal;
 	    @JsonProperty("YearBuilt")
-	    int yearBuilt;
+	    private int yearBuilt;
 	    @JsonProperty("StreetName")
-	    String streetName;
+	    private String streetName;
 	    @JsonProperty("ListPrice")
-	    String listPrice;
+	    private String listPrice;
 	    @JsonProperty("PostalCode")
-	    String postalCode;
+	    private String postalCode;
 	    @JsonProperty("Latitude")
-	    String latitude;
+	    private String latitude;
 	    @JsonProperty("BathsThreeQuarter")
-	    String bathsThreeQuarter;
+	    private String bathsThreeQuarter;
 	    @JsonProperty("BathsFull")
-	    String bathsFull;
+	    private String bathsFull;
 	    @JsonProperty("BathsTotal")
-	    String bathsTotal;
+	    private String bathsTotal;
 	    @JsonProperty("StateOrProvince")
-	    String stateOrProvince;
+	    private String stateOrProvince;
 	    @JsonProperty("PropertyType")
-	    String propertyType;
+	    private String propertyType;
 	    @JsonProperty("StreetAdditionalInfo")
-	    String streetAdditionalInfo;
+	    private String streetAdditionalInfo;
 	    @JsonProperty("StreetDirPrefix")
-	    String streetDirPrefix;
+	    private String streetDirPrefix;
 	    @JsonProperty("BedsTotal")
-	    String bedsTotal;
+	    private String bedsTotal;
 	    @JsonProperty("StreetDirSuffix")
-	    String streetDirSuffix;
+	    private String streetDirSuffix;
 	    @JsonProperty("ListingKey")
-	    String listingKey;
+	    private String listingKey;
 	    @JsonProperty("ListOfficeName")
-	    String listOfficeName;
+	    private String listOfficeName;
 	    @JsonProperty("BathsHalf")
-	    String bathsHalf;
+	    private String bathsHalf;
 	    @JsonProperty("ModificationTimestamp")
-	    Date modificationTimestamp;
+	    private Date modificationTimestamp;
 	    @JsonProperty("CountyOrParish")
-	    String countyOrParish;
+	    private String countyOrParish;
 		public String getStreetNumber() {
 			return streetNumber;
 		}

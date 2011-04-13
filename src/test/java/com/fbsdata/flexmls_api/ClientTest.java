@@ -33,6 +33,11 @@ public class ClientTest {
 	}
 	
 	@Test
+	public void testProperties(){
+		PropertyAsserter.assertBasicGetterSetterBehavior(c);
+	}
+	
+	@Test
 	public void testGet() throws FlexmlsApiClientException {
 		mockAuth();
 		conn.stubGet(
