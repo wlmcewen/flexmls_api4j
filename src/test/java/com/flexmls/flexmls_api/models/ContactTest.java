@@ -14,6 +14,7 @@ import com.flexmls.flexmls_api.ApiParameter;
 import com.flexmls.flexmls_api.Configuration;
 import com.flexmls.flexmls_api.FlexmlsApiClientException;
 import com.flexmls.flexmls_api.MockClient;
+import com.flexmls.flexmls_api.PropertyAsserter;
 import com.flexmls.flexmls_api.Response;
 import com.flexmls.flexmls_api.models.Contact;
 import com.flexmls.flexmls_api.services.ContactService;
@@ -26,7 +27,12 @@ public class ContactTest {
 		cf.setApiUser("SOME_GUY");
 		c = MockClient.mock(cf);
 	}
-	
+
+	@Test
+	public void testProperties(){
+		PropertyAsserter.assertBasicGetterSetterBehavior(new Contact());
+	}
+
 	@Test
 	public void testGet() throws FlexmlsApiClientException {
 		c.stubGet("/contacts", "contacts.json", 200);

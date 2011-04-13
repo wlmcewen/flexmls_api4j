@@ -3,7 +3,6 @@ package com.flexmls.flexmls_api.models;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -91,23 +90,6 @@ public class MarketStatistic extends Base {
 			@SuppressWarnings("unchecked")
 			List<Float> floats = (List<Float>)obj;
 			if(floats != null){
-				setAttribute(key, floats);
-				return;
-			}
-			logger.warn("Key value is not the expected json type: "  + key);
-		}
-		super.setAttribute(key, obj);
-	}
-	
-	public void setAttribute2(String key, Object obj){
-		if (MarketStatFields.valueOf(key) != null) {
-			List<?> list = (List<?>)obj;
-			if(list != null){
-				List<Float> floats = new ArrayList<Float>();
-				for (Object i : list) {
-					Float f = Float.parseFloat(i.toString());
-					floats.add(f);
-				}
 				setAttribute(key, floats);
 				return;
 			}

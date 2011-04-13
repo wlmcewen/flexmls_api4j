@@ -1,6 +1,10 @@
 package com.flexmls.flexmls_api;
 
 
+import static org.junit.Assert.*;
+
+import java.io.IOException;
+
 import org.junit.Test;
 
 import com.flexmls.flexmls_api.Configuration;
@@ -13,6 +17,16 @@ public class ConnectionApacheHttpsTest {
 	@Test
 	public void testProperties(){
 		PropertyAsserter.assertBasicGetterSetterBehavior(c);
+	}
+	
+	@Test
+	public void reset() throws IOException, FlexmlsApiClientException{
+		c.setClient(null);
+		c.setHost(null);
+		c.reset();
+		assertNotNull(c.getClient());
+		assertNotNull(c.getHost());
+		assertEquals(443, c.getHost().getPort());
 	}
 
 }

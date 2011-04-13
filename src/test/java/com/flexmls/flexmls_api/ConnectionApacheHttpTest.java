@@ -83,6 +83,13 @@ public class ConnectionApacheHttpTest {
 			assertEquals(ex, e);
 		}
 	}
+	
+	@Test
+	public void reset() throws IOException, FlexmlsApiClientException{
+		c.setClient(null);
+		c.reset();
+		assertNotNull(c.getClient());
+	}
 
 	private <T extends HttpRequest> void mockupHttpClient(Response rs, Class<T> klass) throws IOException {
 		HttpClient hc = mock(HttpClient.class);
