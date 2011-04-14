@@ -3,6 +3,7 @@ package com.flexmls.flexmls_api.models;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,8 +39,13 @@ public class ModelTest {
 		c.stubGet("/test", "test.json", 200);
 		Response r = c.get("/test", new HashMap<ApiParameter, String>());
 		assertNotNull(r);
-		ExampleModel m = r.getResults(ExampleModel.class).get(0);
+		List<ExampleModel> results = r.getResults(ExampleModel.class);
+		ExampleModel m = results.get(0);
 		assertEquals(1, m.getBar());
+		ExampleModel m2 = results.get(1);
+		assertEquals(2, m2.getBar());
+		ExampleModel m3 = results.get(2);
+		assertEquals(3, m3.getBar());
 	}
 
 	@Test

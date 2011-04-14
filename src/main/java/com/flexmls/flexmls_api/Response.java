@@ -61,7 +61,7 @@ public class Response {
 				throw new JsonMappingException("The JSON returned is missing a results array, which is expected on all api responses.");
 			}
 			for (int i = 0; i < results.size(); i++) {
-				JsonNode n = results.get(0);
+				JsonNode n = results.get(i);
 				T result = mapper.readValue(n, resultClass);
 				r.add(result);
 			}
