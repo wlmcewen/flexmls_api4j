@@ -1,5 +1,6 @@
 package com.flexmls.flexmls_api;
 
+import com.flexmls.flexmls_api.services.ContactService;
 import com.flexmls.flexmls_api.services.ListingService;
 import com.flexmls.flexmls_api.services.MarketStatisticsService;
 import com.flexmls.flexmls_api.services.PropertyTypeService;
@@ -11,6 +12,7 @@ public class ServiceRegistry {
 	
 	private Client client;
 	// Services
+	private ContactService contactService; 
 	private ListingService listingService;
 	private PropertyTypeService propertyTypeService;
 	private MarketStatisticsService marketStatisticsService;
@@ -20,6 +22,17 @@ public class ServiceRegistry {
 		this.client = client;
 	}
 
+	public ContactService getContactService() {
+		if(contactService == null){
+			contactService = new ContactService(client);
+		}
+		return contactService;
+	}
+
+	public void setContactService(ContactService contactService) {
+		this.contactService = contactService;
+	}
+	
 	public ListingService getListingService() {
 		if(listingService == null){
 			listingService = new ListingService(client);
@@ -53,6 +66,5 @@ public class ServiceRegistry {
 			MarketStatisticsService marketStatisticsService) {
 		this.marketStatisticsService = marketStatisticsService;
 	}
-
 
 }

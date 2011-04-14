@@ -64,7 +64,7 @@ public class ListingTest {
 		ListingService s = new ListingService(c);
 		validate(s.my().get(0));
 	}
-	
+
 	private void validate(Listing m){
 		assertEquals("20060725224713296297000000", m.getId());
 		assertEquals("Bonners Ferry", m.getStandardFields().getCity());

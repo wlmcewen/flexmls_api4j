@@ -1,6 +1,7 @@
 package com.flexmls.flexmls_api.models;
 
 import java.util.Date;
+import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -16,7 +17,7 @@ public class Listing extends ResourceEntity {
 	public void setStandardFields(StandardFields standardFields) {
 		this.standardFields = standardFields;
 	}
-
+	
 	public static class StandardFields extends Base {
 	    @JsonProperty("StreetNumber")
 	    private String streetNumber;
@@ -68,6 +69,7 @@ public class Listing extends ResourceEntity {
 	    private Date modificationTimestamp;
 	    @JsonProperty("CountyOrParish")
 	    private String countyOrParish;
+	    
 		public String getStreetNumber() {
 			return streetNumber;
 		}
@@ -218,83 +220,48 @@ public class Listing extends ResourceEntity {
 		public void setCountyOrParish(String countyOrParish) {
 			this.countyOrParish = countyOrParish;
 		}
+		
+	    @JsonProperty("Documents")
+	    private List<Document> documents;
+	    @JsonProperty("Photos")
+	    private List<Photo> photos;
+	    @JsonProperty("Videos")
+	    private List<Video> videos;
+	    @JsonProperty("VirtualTours")
+	    private List<VirtualTour> virtualTours;
+	    @JsonProperty("OpenHouses")
+	    private List<OpenHouse> openHouses;
+
+		public List<Document> getDocuments() {
+			return documents;
+		}
+		public void setDocuments(List<Document> documents) {
+			this.documents = documents;
+		}
+		public List<Photo> getPhotos() {
+			return photos;
+		}
+		public void setPhotos(List<Photo> photos) {
+			this.photos = photos;
+		}
+		public List<Video> getVideos() {
+			return videos;
+		}
+		public void setVideos(List<Video> videos) {
+			this.videos = videos;
+		}
+		public List<VirtualTour> getVirtualTours() {
+			return virtualTours;
+		}
+		public void setVirtualTours(List<VirtualTour> virtualTours) {
+			this.virtualTours = virtualTours;
+		}
+		public List<OpenHouse> getOpenHouses() {
+			return openHouses;
+		}
+		public void setOpenHouses(List<OpenHouse> openHouses) {
+			this.openHouses = openHouses;
+		}
+		
 	}
-	
-	public String getStreetNumber() {
-		return standardFields.streetNumber;
-	}
-	public String getLongitude() {
-		return standardFields.longitude;
-	}
-	public String getCity() {
-		return standardFields.city;
-	}
-	public String getListingId() {
-		return standardFields.listingId;
-	}
-	public String getPublicRemarks() {
-		return standardFields.publicRemarks;
-	}
-	public String getBuildingAreaTotal() {
-		return standardFields.buildingAreaTotal;
-	}
-	public int getYearBuilt() {
-		return standardFields.yearBuilt;
-	}
-	public String getStreetName() {
-		return standardFields.streetName;
-	}
-	public String getListPrice() {
-		return standardFields.listPrice;
-	}
-	public String getPostalCode() {
-		return standardFields.postalCode;
-	}
-	public String getLatitude() {
-		return standardFields.latitude;
-	}
-	public String getBathsThreeQuarter() {
-		return standardFields.bathsThreeQuarter;
-	}
-	public String getBathsFull() {
-		return standardFields.bathsFull;
-	}
-	public String getBathsTotal() {
-		return standardFields.bathsTotal;
-	}
-	public String getStateOrProvince() {
-		return standardFields.stateOrProvince;
-	}
-	public String getPropertyType() {
-		return standardFields.propertyType;
-	}
-	public String getStreetAdditionalInfo() {
-		return standardFields.streetAdditionalInfo;
-	}
-	public String getStreetDirPrefix() {
-		return standardFields.streetDirPrefix;
-	}
-	public String getBedsTotal() {
-		return standardFields.bedsTotal;
-	}
-	public String getStreetDirSuffix() {
-		return standardFields.streetDirSuffix;
-	}
-	public String getListingKey() {
-		return standardFields.listingKey;
-	}
-	public String getListOfficeName() {
-		return standardFields.listOfficeName;
-	}
-	public String getBathsHalf() {
-		return standardFields.bathsHalf;
-	}
-	public Date getModificationTimestamp() {
-		return standardFields.modificationTimestamp;
-	}
-	public String getCountyOrParish() {
-		return standardFields.countyOrParish;
-	}
-	
-	
 }

@@ -26,4 +26,31 @@ public class ListingService extends BaseService<Listing> {
 		return getClient().get("/my" + getPath(), opts).getResults(model());
 	}
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	// SubResources
+	//
+	// TODO: I don't love this design, especially in comparison to the ruby library.  BUT, it works 
+	// for the time being.
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public DocumentService getDocumentService(Listing l){
+		return new DocumentService(getClient(), getPath() + "/" + l.getId());
+	}
+
+	public PhotoService getPhotoService(Listing l){
+		return new PhotoService(getClient(), getPath() + "/" + l.getId());
+	}
+
+	public VideoService getVideoService(Listing l){
+		return new VideoService(getClient(), getPath() + "/" + l.getId());
+	}
+	public VirtualTourService getVirtualTourService(Listing l){
+		return new VirtualTourService(getClient(), getPath() + "/" + l.getId());
+	}
+
+	public OpenHouseService getOpenHouseService(Listing l){
+		return new OpenHouseService(getClient(), getPath() + "/" + l.getId());
+	}
+
 }
