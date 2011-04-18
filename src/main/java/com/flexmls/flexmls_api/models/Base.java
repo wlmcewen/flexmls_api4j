@@ -14,6 +14,13 @@ public class Base {
 	private static Logger logger = Logger.getLogger(Base.class);
 	private Map<String, Object> attributes = new HashMap<String, Object>();
 	
+	/**
+	 * This method gets called for all fields that are not mapped to a specific java class field in
+	 * inheriting models.  It's a "catch-all" for future fields, or anything that the client 
+	 * missed. 
+	 * @param key
+	 * @param value
+	 */
 	@JsonAnySetter
 	public void setAttribute(String key, Object value){
 		if(logger.isDebugEnabled()){
