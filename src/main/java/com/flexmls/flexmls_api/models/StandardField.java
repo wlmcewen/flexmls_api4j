@@ -30,7 +30,7 @@ public class StandardField extends Base {
 	 * TODO I'm probably doing some of this wrong, but haven't looked much into deserializer 
 	 * examples to clean up.
 	 */
-	private static class MapperDeserializer extends JsonDeserializer<StandardField> {
+	public static class MapperDeserializer extends JsonDeserializer<StandardField> {
 		@Override
 		public StandardField deserialize(JsonParser jp,
 				DeserializationContext ctxt) throws IOException,
