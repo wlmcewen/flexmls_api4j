@@ -4,6 +4,8 @@ import com.flexmls.flexmls_api.services.ContactService;
 import com.flexmls.flexmls_api.services.ListingService;
 import com.flexmls.flexmls_api.services.MarketStatisticsService;
 import com.flexmls.flexmls_api.services.PropertyTypeService;
+import com.flexmls.flexmls_api.services.StandardFieldService;
+import com.flexmls.flexmls_api.services.SystemInfoService;
 
 /**
  * Single point of access for working with all API services.
@@ -16,6 +18,8 @@ public class ServiceRegistry {
 	private ListingService listingService;
 	private PropertyTypeService propertyTypeService;
 	private MarketStatisticsService marketStatisticsService;
+	private SystemInfoService systemInfoService;
+	private StandardFieldService standardFieldService;
 	
 	public ServiceRegistry(Client client) {
 		super();
@@ -65,6 +69,28 @@ public class ServiceRegistry {
 	public void setMarketStatisticsService(
 			MarketStatisticsService marketStatisticsService) {
 		this.marketStatisticsService = marketStatisticsService;
+	}
+
+	public SystemInfoService getSystemInfoService() {
+		if(systemInfoService == null){
+			systemInfoService = new SystemInfoService(client);
+		}
+		return systemInfoService;
+	}
+
+	public void setSystemInfoService(SystemInfoService systemInfoService) {
+		this.systemInfoService = systemInfoService;
+	}
+
+	public StandardFieldService getStandardFieldService() {
+		if(standardFieldService == null){
+			standardFieldService = new StandardFieldService(client);
+		}
+		return standardFieldService;
+	}
+
+	public void setStandardFieldService(StandardFieldService standardFieldService) {
+		this.standardFieldService = standardFieldService;
 	}
 
 }

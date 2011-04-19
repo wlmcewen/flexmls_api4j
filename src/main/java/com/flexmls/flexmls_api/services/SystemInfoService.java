@@ -7,7 +7,7 @@ public class SystemInfoService extends BaseService<SystemInfo> {
 
 	@Override
 	public String getPath() {
-		return "/systeminfo";
+		return "/system";
 	}
 
 	public SystemInfoService(Client c) {

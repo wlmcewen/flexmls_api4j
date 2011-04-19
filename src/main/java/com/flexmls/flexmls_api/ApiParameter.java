@@ -20,6 +20,9 @@ public enum ApiParameter {
 	// Hotsheet
 	HotSheet,
 	OpenHouses,
+	// Nearby
+	Lat,
+	Lon,
 	// Api client fundamentals
 	ApiKey,
 	ApiSig,
