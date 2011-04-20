@@ -43,7 +43,7 @@
 	</distributionManagement>
 	<issueManagement>
 		<system>JIRA</system>
-		<url>http://jira.fbsdata.com/browse/CUR</url>
+		<url>http://jira.fbsdata.com/browse/JAVAAPI</url>
 	</issueManagement>
 	<organization>
 		<name>FBS Data Systems</name>
